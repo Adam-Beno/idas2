@@ -69,8 +69,8 @@ function createWindow() {
   // Open the DevTools.
   win.webContents.openDevTools();
   if (process.env.NODE_ENV === 'development') {
-    BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REACT));
-    BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REDUX));
+    //BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REACT));
+    //BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REDUX));
   }
 
   // and load the index.html of the app.
@@ -88,6 +88,10 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
     server = null;
+  });
+
+  knex.raw('SELECT ID FROM BLOB_TABLE').then((result) => {
+    console.log(result);
   });
 }
 

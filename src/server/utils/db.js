@@ -5,9 +5,10 @@ export default knex({
   connection: {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    connectString: 'jdbc:oracle:thin:@fei-sql1.upceucebny.cz:1521:idas12',
+    connectString: process.env.DB_STRING,
   },
   migrations: {
     tableName: 'migrations',
   },
 });
+
