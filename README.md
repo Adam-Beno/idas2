@@ -3,6 +3,8 @@
 - Python 2.7
 - node-gyp (npm install -g node-gyp)
 - VS14 (Win) / GCC (Linux) / XCode command line tools (Mac)
+- oracle instant client 12.* (Basic + SDK)
+- vpn to connect to the school network
 
 ## Installation
 1. Clone repo
