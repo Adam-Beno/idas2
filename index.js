@@ -16,7 +16,9 @@ import knex from './src/server/utils/db';
 dotenv.config();
 
 let server = express();
+
 // Set up the graphQL endpoint
+/* Not planning on using GraphQL in this project
 GraphQLSchema.then((schema) => {
   server.use('/graphql', graphQLExpress({
     schema,
@@ -24,6 +26,7 @@ GraphQLSchema.then((schema) => {
   }));
   console.log('GraphQL endpoint registered.');
 });
+*/
 
 // Show dev tools if the app is in development mode
 if (process.env.NODE_ENV === 'development') {
@@ -61,7 +64,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1280,
     height: 720,
-    frame: true,
+    frame: false,
     transparent: true,
     resizable: false,
   });
@@ -69,7 +72,7 @@ function createWindow() {
   // Open the DevTools.
   win.webContents.openDevTools();
   if (process.env.NODE_ENV === 'development') {
-    //BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REACT));
+    BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REACT));
     //BrowserWindow.addDevToolsExtension(getExtensionPath(process.env.EXT_REDUX));
   }
 
@@ -90,6 +93,8 @@ function createWindow() {
     server = null;
   });
 
+  // Test DB Connection
+  // TODO: Remove later on
   knex.raw('SELECT ID FROM BLOB_TABLE').then((result) => {
     console.log(result);
   });
