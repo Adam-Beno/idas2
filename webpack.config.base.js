@@ -4,17 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import fs from 'fs';
 import { dependencies as externals } from './app/package.json';
-
-var nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(function (x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function (mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
 
 export default {
   externals: Object.keys(externals || {}),

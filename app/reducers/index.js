@@ -1,11 +1,12 @@
-// @flow
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 import { routerReducer as router } from 'react-router-redux';
-import counter from './counter';
+
+// CUSTOM REDUCERS
+import appReducer from '../components/App/reducer';
 
 const rootReducer = combineReducers({
-  counter,
   router,
+  app: appReducer
 });
 
 export default rootReducer;
