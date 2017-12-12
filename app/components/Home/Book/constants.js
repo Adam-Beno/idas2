@@ -1,0 +1,3 @@
+/* eslint-disable */
+export const SWITCH_EXPAND_STATE = 'BOOK_CARD/SWITCH_EXPAND_STATE';
+export const SWITCH_MENU_STATE = 'BOOK_CARD/SWITCH_MENU_STATE';

@@ -90,6 +90,10 @@ export default theme => ({
       height: 'calc(100% - 64px)',
       marginTop: 64,
     },
+    overflowX: 'scroll',
+    '& > div': {
+      paddingBottom: 64,
+    }
   },
   menuLink: {
     textDecoration: 'none',

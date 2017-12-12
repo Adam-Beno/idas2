@@ -21,49 +21,41 @@ import DashboardIcon from 'material-ui-icons/Dashboard';
 import LibraryBooksIcon from 'material-ui-icons/LibraryBooks';
 import FontDownloadIcon from 'material-ui-icons/FontDownload';
 import AccountBoxIcon from 'material-ui-icons/AccountBox';
-import PaletteIcon from 'material-ui-icons/Palette';
+import StyleIcon from 'material-ui-icons/Style';
 
 import { switchMenuState } from './actions';
 import { menuState } from './selectors';
 import styles from './styles';
+
+import Notification from '../Notification';
 
 const App = class App extends React.Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     switchMenuState: propTypes.func.isRequired, // eslint-disable-line
     menuState: propTypes.bool.isRequired, // eslint-disable-line
+    children: propTypes.object.isRequired, // eslint-disable-line
   }
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
-  hanleDrawerState = () => {
-
-  };
 
   render() {
     const { props: { classes }, props } = this;
 
     return (
       <div className={classes.root}>
+        <Notification />
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar, props.menuState && classes.appBarShift)}>
             <Toolbar disableGutters={!props.menuState}>
               <IconButton
                 color="contrast"
-                aria-label="open drawer"
+                aria-label="Open drawer"
                 onClick={() => props.switchMenuState()}
                 className={classNames(classes.menuButton, props.menuState && classes.hide)}
               >
                 <MenuIcon />
               </IconButton>
               <Typography type="title" color="inherit" noWrap>
-                Knihovna
+                Library
               </Typography>
             </Toolbar>
           </AppBar>
@@ -117,7 +109,7 @@ const App = class App extends React.Component {
                 <Link to="/motives" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
-                      <PaletteIcon />
+                      <StyleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Motives" />
                   </ListItem>

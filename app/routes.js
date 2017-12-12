@@ -3,14 +3,14 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 
 // Components
-import HomePage from './components/Home';
+import Home from './components/Home';
 import App from './components/App';
 
 
 export default () => (
   <App>
     <Switch>
-      <Route path="/" component={HomePage} />
+      <Route path="/" component={Home} />
     </Switch>
   </App>
 );
