@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import _snakeCase from 'lodash/snakeCase';
 import _mapKeys from 'lodash/mapKeys';
 import _toUpper from 'lodash/toUpper';
+import _omit from 'lodash/omit';
 
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
@@ -20,7 +21,7 @@ import styles from './styles';
 import { editValue, clearStore } from './actions';
 import { values } from './selectors';
 
-const author = class Author extends Component {
+const motive = class MotiveAdd extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -37,9 +38,9 @@ const author = class Author extends Component {
 
   async handleSubmit() {
     const formData = _mapKeys(this.props.values.toJS(), (value, key) => _toUpper(_snakeCase(key)));
-    await knex('AUTHOR').insert(formData);
+    await knex('MOTIVE').insert(_omit(formData, ['DATA', 'VALUES']));
     this.props.clearStore();
-    this.props.redirect('/authors');
+    this.props.redirect('/motives');
   }
 
   render() {
@@ -48,66 +49,37 @@ const author = class Author extends Component {
     return (
       <div>
         <Typography type="title" gutterBottom>
-          Add new author
+          Add new motive
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
-            <form id="authorForm" className={classes.container} noValidate autoComplete="off">
+
+            <form id="categoryForm" className={classes.container} noValidate autoComplete="off">
               <Grid container>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item xs={12}>
                   <TextField
-                    name="firstName"
-                    label="First name"
+                    name="name"
+                    label="Name"
                     className={classes.textField}
                     onChange={(e) => props.editValue('name', e.target.value)}
                     margin="normal"
                     fullWidth
                   />
                 </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item xs={12}>
                   <TextField
-                    name="artisticName"
-                    label="Artistic name"
+                    name="description"
+                    label="Description"
+                    multiline
                     className={classes.textField}
-                    onChange={(e) => props.editValue('nickname', e.target.value)}
-                    margin="normal"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
-                  <TextField
-                    name="lastName"
-                    label="Last name"
-                    className={classes.textField}
-                    onChange={(e) => props.editValue('surname', e.target.value)}
-                    margin="normal"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
-                  <TextField
-                    name="age"
-                    label="Age"
-                    className={classes.textField}
-                    onChange={(e) => props.editValue('age', e.target.value, 'number')}
-                    margin="normal"
-                    fullWidth
-                    type="number"
-                  />
-                </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
-                  <TextField
-                    name="genre"
-                    label="Genre"
-                    className={classes.textField}
-                    onChange={(e) => props.editValue('genre', e.target.value)}
+                    onChange={(e) => props.editValue('description', e.target.value)}
                     margin="normal"
                     fullWidth
                   />
                 </Grid>
               </Grid>
               <Button raised color="primary" className={classes.button} onClick={this.handleSubmit}>
-                ADD NEW AUTHOR
+                ADD NEW MOTIVE
               </Button>
             </form>
           </CardContent>
@@ -132,4 +104,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(author);
+)(motive);

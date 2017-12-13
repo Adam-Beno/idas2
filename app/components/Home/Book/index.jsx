@@ -47,7 +47,7 @@ const Book = (props) => {
         </Menu>
         <CardMedia
           className={classes.media}
-          image={data.image}
+          image={data.photo}
           title={data.imageName}
         />
         <CardContent>
@@ -73,7 +73,7 @@ Book.propTypes = {
     name: propTypes.string.isRequired,
     authorName: propTypes.string.isRequired,
     description: propTypes.string.isRequired,
-    image: propTypes.string.isRequired,
+    photo: propTypes.string.isRequired,
     imageName: propTypes.string.isRequired,
     dateOfIssue: propTypes.number,
     periodOfIssue: propTypes.string,

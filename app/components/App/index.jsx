@@ -83,7 +83,7 @@ const App = class App extends React.Component {
                     <ListItemText primary="Dashboard" />
                   </ListItem>
                 </Link>
-                <Link to="/add-book" className={classes.menuLink}>
+                <Link to="/books" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
                       <LibraryBooksIcon />
