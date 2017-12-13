@@ -65,7 +65,7 @@ const printer = class Printer extends Component {
     return (
       <div>
         <Typography type="title" gutterBottom>
-          Authors
+          Printers
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
