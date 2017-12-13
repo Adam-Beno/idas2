@@ -22,6 +22,7 @@ import LibraryBooksIcon from 'material-ui-icons/LibraryBooks';
 import FontDownloadIcon from 'material-ui-icons/FontDownload';
 import AccountBoxIcon from 'material-ui-icons/AccountBox';
 import StyleIcon from 'material-ui-icons/Style';
+import BookmarkIcon from 'material-ui-icons/Bookmark';
 
 import { switchMenuState } from './actions';
 import { menuState } from './selectors';
@@ -112,6 +113,14 @@ const App = class App extends React.Component {
                       <StyleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Motives" />
+                  </ListItem>
+                </Link>
+                <Link to="/categories" className={classes.menuLink}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <BookmarkIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Categories" />
                   </ListItem>
                 </Link>
               </List>
