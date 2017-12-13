@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { SET_DATA } from './constants';
 
 const initialState = fromJS({
-  data: [],
+  data: {},
 });
 
 function authorReducer(state = initialState, action) {

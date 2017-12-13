@@ -6,7 +6,7 @@ import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import _map from 'lodash/map';
 import _mapKeys from 'lodash/mapKeys';
-import _camelCase from 'lodash/camelCase';
+import _find from 'lodash/find';
 import _toLower from 'lodash/toLower';
 
 
@@ -30,13 +30,17 @@ const author = class Author extends Component {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
     setData: propTypes.func.isRequired,
-    data: propTypes.array.isRequired, // eslint-disable-line
+    data: propTypes.object.isRequired, // eslint-disable-line
   };
 
   constructor() {
     super();
 
     this.getData = this.getData.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+
+
     this.getData();
   }
 
@@ -44,6 +48,15 @@ const author = class Author extends Component {
     let results = await knex('AUTHOR').select();
     results = _map(results, (value) => _mapKeys(value, (v, k) => _toLower(k)));
     this.props.setData(results);
+  }
+
+  async handleDelete(id) {
+    await knex('AUTHOR').where('ID', id).del();
+    this.getData();
+  }
+
+  handleEdit(id) {
+    this.props.redirect(`/authors/edit/${id}`);
   }
 
   render() {
@@ -79,10 +92,10 @@ const author = class Author extends Component {
                     <TableCell>{n.age}</TableCell>
                     <TableCell>{n.genre}</TableCell>
                     <TableCell>
-                      <IconButton className={classes.cellButton} aria-label="Edit">
+                      <IconButton className={classes.cellButton} aria-label="Edit" onClick={() => this.handleEdit(n.id)}>
                         <ModeEditIcon />
                       </IconButton>
-                      <IconButton className={classes.cellButton} aria-label="Delete">
+                      <IconButton className={classes.cellButton} aria-label="Delete" onClick={() => this.handleDelete(n.id)}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>

@@ -25,8 +25,8 @@ const author = class Author extends Component {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
     values: propTypes.object, // eslint-disable-line
-    editValue: propTypes.func.isRequired,
-    clearStore: propTypes.func.isRequired,
+    editValue: propTypes.func.isRequired, // eslint-disable-line
+    clearStore: propTypes.func.isRequired, // eslint-disable-line
   };
 
   constructor() {
