@@ -34,7 +34,7 @@ const Book = (props) => {
             </IconButton>
           }
           title={data.name}
-          subheader={`Written by ${data.authorName} published in ${data.dateOfIssue || data.periodOfIssue}`}
+          subheader={`Written by ${data.authorName} published in ${data.yearOfIssue || data.periodOfIssue}`}
         />
         <Menu
           id="simple-menu"
@@ -75,7 +75,7 @@ Book.propTypes = {
     description: propTypes.string.isRequired,
     photo: propTypes.string.isRequired,
     imageName: propTypes.string.isRequired,
-    dateOfIssue: propTypes.number,
+    yearOfIssue: propTypes.number,
     periodOfIssue: propTypes.string,
     placeOfIssue: propTypes.string.isRequired,
     language: propTypes.string.isRequired,

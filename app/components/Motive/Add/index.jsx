@@ -20,6 +20,7 @@ import knex from '../../../utils/knex';
 import styles from './styles';
 import { editValue, clearStore } from './actions';
 import { values } from './selectors';
+import ReduxForm from './form';
 
 const motive = class MotiveAdd extends Component {
   static propTypes = {
@@ -36,11 +37,14 @@ const motive = class MotiveAdd extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit() {
+  handleSubmit(vals) {
+    /*
     const formData = _mapKeys(this.props.values.toJS(), (value, key) => _toUpper(_snakeCase(key)));
     await knex('MOTIVE').insert(_omit(formData, ['DATA', 'VALUES']));
     this.props.clearStore();
     this.props.redirect('/motives');
+    */
+    console.log(vals);
   }
 
   render() {
@@ -82,6 +86,7 @@ const motive = class MotiveAdd extends Component {
                 ADD NEW MOTIVE
               </Button>
             </form>
+            <ReduxForm handleSubmit={this.handleSubmit} />
           </CardContent>
         </Card>
       </div>

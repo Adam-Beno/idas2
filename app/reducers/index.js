@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux-immutable';
 import { routerReducer as router } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form/immutable';
 
 // CUSTOM REDUCERS
 import appReducer from '../components/App/reducer';
@@ -23,6 +24,7 @@ import homeReducer from '../components/Home/reducer';
 
 const rootReducer = combineReducers({
   router,
+  form: formReducer,
   app: appReducer,
   notification: notificationReducer,
   bookCard: bookCardReducer,
