@@ -3,10 +3,10 @@ import { fromJS } from 'immutable';
 import { SET_DATA } from './constants';
 
 const initialState = fromJS({
-  data: [],
+  data: {},
 });
 
-function authorReducer(state = initialState, action) {
+function printerReducer(state = initialState, action) {
   switch (action.type) {
     case SET_DATA:
       return state
@@ -16,4 +16,4 @@ function authorReducer(state = initialState, action) {
   }
 }
 
-export default authorReducer;
+export default printerReducer;

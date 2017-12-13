@@ -25,12 +25,12 @@ import knex from '../../utils/knex';
 import { setData } from './actions';
 import { data } from './selectors';
 
-const author = class Author extends Component {
+const printer = class Printer extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
     setData: propTypes.func.isRequired,
-    data: propTypes.array.isRequired, // eslint-disable-line
+    data: propTypes.object.isRequired, // eslint-disable-line
   };
 
   constructor() {
@@ -45,18 +45,18 @@ const author = class Author extends Component {
   }
 
   async getData() {
-    let results = await knex('AUTHOR').select();
+    let results = await knex('PRINTER').select();
     results = _map(results, (value) => _mapKeys(value, (v, k) => _toLower(k)));
     this.props.setData(results);
   }
 
   async handleDelete(id) {
-    await knex('AUTHOR').where('ID', id).del();
+    await knex('PRINTER').where('ID', id).del();
     this.getData();
   }
 
   handleEdit(id) {
-    this.props.redirect(`/authors/edit/${id}`);
+    this.props.redirect(`/printers/edit/${id}`);
   }
 
   render() {
@@ -69,7 +69,7 @@ const author = class Author extends Component {
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
-            <Button fab mini color="primary" aria-label="add" className={classes.addButton} onClick={() => props.redirect('/authors/add-form')}>
+            <Button fab mini color="primary" aria-label="add" className={classes.addButton} onClick={() => props.redirect('/printers/add-form')}>
               <AddIcon />
             </Button>
             <Table className={classes.table}>
@@ -77,9 +77,6 @@ const author = class Author extends Component {
                 <TableRow>
                   <TableCell>First name</TableCell>
                   <TableCell>Last name</TableCell>
-                  <TableCell>Artistic name</TableCell>
-                  <TableCell>Age</TableCell>
-                  <TableCell>Genre</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -88,9 +85,6 @@ const author = class Author extends Component {
                   <TableRow key={n.id}>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.surname}</TableCell>
-                    <TableCell>{n.nickname}</TableCell>
-                    <TableCell>{n.age}</TableCell>
-                    <TableCell>{n.genre}</TableCell>
                     <TableCell>
                       <IconButton className={classes.cellButton} aria-label="Edit" onClick={() => this.handleEdit(n.id)}>
                         <ModeEditIcon />
@@ -124,4 +118,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(author);
+)(printer);
