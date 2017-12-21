@@ -1,6 +1,6 @@
 import knex from 'knex';
 
-export default knex({
+const connection = knex({
   client: 'oracledb',
   connection: {
     user: 'C##ST49613',
@@ -10,4 +10,7 @@ export default knex({
   migrations: {
     tableName: 'migrations',
   },
+  debug: true,
 });
+
+export default connection;
