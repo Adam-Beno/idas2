@@ -25,7 +25,7 @@ import knex from '../../utils/knex';
 import { setData } from './actions';
 import { data } from './selectors';
 
-const motive = class Motive extends Component {
+class Motive extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -102,7 +102,7 @@ const motive = class Motive extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   data,
@@ -118,4 +118,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(motive);
+)(Motive);

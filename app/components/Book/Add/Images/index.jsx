@@ -31,7 +31,7 @@ import { setData, setInfo, dropFiles } from '../actions';
 import { info, files, newBookId } from '../selectors';
 import styles from './styles';
 
-const imageComp = class Images extends Component {
+class Images extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -81,7 +81,7 @@ const imageComp = class Images extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   info,
@@ -99,4 +99,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(imageComp);
+)(Images);

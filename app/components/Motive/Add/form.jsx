@@ -11,7 +11,7 @@ import {
 
 import validate from './validate';
 
-const contact = class ContactForm extends Component {
+class ContactForm extends Component {
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
@@ -21,9 +21,9 @@ const contact = class ContactForm extends Component {
       </form>
     );
   }
-};
+}
 
 export default reduxForm({
   form: 'motiveAddForm',  // a unique identifier for this form
   validate,
-})(contact);
+})(ContactForm);

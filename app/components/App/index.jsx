@@ -30,7 +30,7 @@ import styles from './styles';
 
 import Notification from '../Notification';
 
-const App = class App extends React.Component {
+class App extends React.Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     switchMenuState: propTypes.func.isRequired, // eslint-disable-line
@@ -133,7 +133,7 @@ const App = class App extends React.Component {
       </div>
     );
   }
-};
+}
 
 
 const mapStateToProps = createStructuredSelector({

@@ -25,7 +25,7 @@ import styles from './styles';
 import { editValue, clearStore, setData } from './actions';
 import { values, data } from './selectors';
 
-const category = class CategoryEdit extends Component {
+class CategoryEdit extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -114,7 +114,7 @@ const category = class CategoryEdit extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   values,
@@ -133,4 +133,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(category);
+)(CategoryEdit);

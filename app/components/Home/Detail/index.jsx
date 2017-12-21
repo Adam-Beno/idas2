@@ -15,12 +15,14 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 
 import styles from './styles';
 
-const detail = class Detail extends React.Component {
+class Detail extends React.Component {
   static propTypes = {
+    classes: propTypes.object.isRequired,
+    data: propTypes.object.isRequired,
   };
 
   render() {
-    const { props } = this;
+    const { props: { classes, data }, props } = this;
     return (
       <div>
         <Card className={classes.card}>
@@ -63,5 +65,5 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(detail);
+)(Detail);
 

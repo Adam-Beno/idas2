@@ -4,10 +4,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
-import _snakeCase from 'lodash/snakeCase';
-import _mapKeys from 'lodash/mapKeys';
-import _toUpper from 'lodash/toUpper';
-import _omit from 'lodash/omit';
 
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
@@ -22,7 +18,7 @@ import { editValue, clearStore } from './actions';
 import { values } from './selectors';
 import ReduxForm from './form';
 
-const motive = class MotiveAdd extends Component {
+class MotiveAdd extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -92,7 +88,7 @@ const motive = class MotiveAdd extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   values,
@@ -109,4 +105,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(motive);
+)(MotiveAdd);

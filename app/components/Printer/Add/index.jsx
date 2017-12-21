@@ -21,7 +21,7 @@ import styles from './styles';
 import { editValue, clearStore } from './actions';
 import { values } from './selectors';
 
-const printer = class PrinterAdd extends Component {
+class PrinterAdd extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -86,7 +86,7 @@ const printer = class PrinterAdd extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   values,
@@ -103,4 +103,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(printer);
+)(PrinterAdd);

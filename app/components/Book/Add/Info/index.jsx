@@ -25,7 +25,7 @@ import knex from '../../../../utils/knex';
 import { setData, setInfo } from '../actions';
 import { data, info } from '../selectors';
 
-const infoComp = class Info extends Component {
+class Info extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -181,7 +181,7 @@ const infoComp = class Info extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   data,
@@ -198,4 +198,4 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-)(infoComp);
+)(Info);

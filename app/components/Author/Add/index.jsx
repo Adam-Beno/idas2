@@ -20,7 +20,7 @@ import styles from './styles';
 import { editValue, clearStore } from './actions';
 import { values } from './selectors';
 
-const author = class Author extends Component {
+class Author extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -132,4 +132,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(author);
+)(Author);

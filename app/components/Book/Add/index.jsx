@@ -40,7 +40,7 @@ function getStepContent(index) {
   }
 }
 
-const book = class BookAdd extends Component {
+class BookAdd extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
@@ -112,7 +112,7 @@ const book = class BookAdd extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   step,
@@ -132,4 +132,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-)(book);
+)(BookAdd);
