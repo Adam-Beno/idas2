@@ -4,7 +4,10 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import { Map } from 'immutable';
+import createSagaMiddleware from 'redux-saga';
+
 import rootReducer from '../reducers';
+import rootSaga from '../sagas';
 
 const history = createHashHistory();
 
@@ -31,6 +34,11 @@ const configureStore = (initialState = Map()) => {
   const actionCreators = {
     ...routerActions,
   };
+
+  // Add Saga Middleware
+  const saga = createSagaMiddleware();
+  middleware.push(saga);
+
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -47,6 +55,9 @@ const configureStore = (initialState = Map()) => {
 
   // Create Store
   const store = createStore(rootReducer, initialState, enhancer);
+
+  // Run saga
+  saga.run(rootSaga);
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>
