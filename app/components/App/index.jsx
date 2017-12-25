@@ -43,8 +43,8 @@ class App extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Notification />
         <div className={classes.appFrame}>
+          <Notification />
           <AppBar className={classNames(classes.appBar, props.menuState && classes.appBarShift)}>
             <Toolbar disableGutters={!props.menuState}>
               <IconButton
@@ -56,7 +56,7 @@ class App extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography type="title" color="inherit" noWrap>
-                Library
+                Antique Library
               </Typography>
             </Toolbar>
           </AppBar>
