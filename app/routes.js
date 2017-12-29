@@ -2,9 +2,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-// Components
+import App from './containers/app';
 import Home from './components/Home';
-import App from './components/App';
 import Author from './components/Author';
 import AuthorAdd from './components/Author/Add';
 import AuthorEdit from './components/Author/Edit';

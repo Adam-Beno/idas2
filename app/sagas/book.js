@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 import Book from '../models/book';
 import { FETCH_BOOKS, FETCH_BOOKS_SUCCEEDED, FETCH_BOOKS_FAILED } from '../components/Home/constants';
-import { SHOW_NOTIFICATION } from '../components/Notification/constants';
+import { SHOW_NOTIFICATION } from '../constants/notification';
 
 export function* fetchBooks() {
   try {

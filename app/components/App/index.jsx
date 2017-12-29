@@ -28,7 +28,7 @@ import { switchMenuState } from './actions';
 import { menuState } from './selectors';
 import styles from './styles';
 
-import Notification from '../Notification';
+import Notification from '../notification';
 
 class App extends React.Component {
   static propTypes = {
