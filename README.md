@@ -22,6 +22,7 @@ Whole project is built on a [Electron React Boilerplate](https://github.com/chen
 * Python 2.7 (**Python 3 will not work with this project**)
 * [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html) make sure to download both **client-basic and client-sdk**. Then export the contents of the zip files into one folder.
 * C++ Build tools
+* **VPN Connection to school servers** to display any data
 
 ### Windows
 * You can use [windows-build-tools](https://www.npmjs.com/package/windows-build-tools) to install both Python, C++ and Windows SDK simply by using this command `npm install --global windows-build-tools`
