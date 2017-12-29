@@ -14,11 +14,13 @@
 
 [Electron](http://electron.atom.io/) application based on [React](https://facebook.github.io/react/), [Redux](https://github.com/reactjs/redux), [React Router](https://github.com/reactjs/react-router), [Webpack](http://webpack.github.io/docs/), [React Transform HMR](https://github.com/gaearon/react-transform-hmr), [Redux Saga](https://github.com/redux-saga/redux-saga).
 
+Whole project is built on a [Electron React Boilerplate](https://github.com/chentsulin/electron-react-boilerplate).
+
 ## Prerequisities
 * Have [Node.js](https://nodejs.org/en/) with version 7 or higher
 * It's recommended to use [Yarn](https://yarnpkg.com/en/) over the default NPM that comes with Node.js
 * Python 2.7 (**Python 3 will not work with this project**)
-* [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html) make sure to download both client-basic and client-sdk. Then export the contents of the zip file into one folder.
+* [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html) make sure to download both **client-basic and client-sdk**. Then export the contents of the zip files into one folder.
 * C++ Build tools
 
 ### Windows
@@ -28,9 +30,12 @@
 If you are having issues with this part, you can also follow this installation guide that's more indepth [https://github.com/oracle/node-oracledb/blob/master/INSTALL.md](https://github.com/oracle/node-oracledb/blob/master/INSTALL.md)
 
 ## Install
-1. Clone repository to your machine
-2. `cd idas2`
-3. `yarn`
+Clone repository to your machine, then proceed by using the following commands
+```bash 
+$ cd idas2
+$ yarn
+```
+This will take a while if you run the `yarn or npm install` command for first time.
 
 *If you get **node-gyp** errors, then there is a problem with your builds tools. Check instant client location and if you have python / C++ compilers as mentioned in the prerequisities guide*
 
@@ -66,14 +71,4 @@ $ npm run package -- --[option]
 ```
 
 ## License
-MIT © [C. T. Lin](https://github.com/chentsulin)
-
-[npm-image]: https://img.shields.io/npm/v/electron-react-boilerplate.svg?style=flat-square
-[github-tag-image]: https://img.shields.io/github/tag/chentsulin/electron-react-boilerplate.svg
-[github-tag-url]: https://github.com/chentsulin/electron-react-boilerplate/releases/latest
-[travis-image]: https://travis-ci.org/chentsulin/electron-react-boilerplate.svg?branch=master
-[travis-url]: https://travis-ci.org/chentsulin/electron-react-boilerplate
-[appveyor-image]: https://ci.appveyor.com/api/projects/status/github/chentsulin/electron-react-boilerplate?svg=true
-[appveyor-url]: https://ci.appveyor.com/project/chentsulin/electron-react-boilerplate/branch/master
-[david_img]: https://img.shields.io/david/chentsulin/electron-react-boilerplate.svg
-[david_site]: https://david-dm.org/chentsulin/electron-react-boilerplate
+MIT © [Adam Beňo](https://github.com/Adam-Beno)
