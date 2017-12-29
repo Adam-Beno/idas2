@@ -2,7 +2,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import App from './containers/app';
+import App from './containers/App';
 import Home from './components/Home';
 import Author from './components/Author';
 import AuthorAdd from './components/Author/Add';
