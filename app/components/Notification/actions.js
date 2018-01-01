@@ -1,4 +1,4 @@
-import { SHOW_NOTIFICATION, DISMISS_NOTIFICATION } from '../constants/notification';
+import { SHOW_NOTIFICATION, DISMISS_NOTIFICATION } from './constants';
 
 export function showNotification(message) {
   return {

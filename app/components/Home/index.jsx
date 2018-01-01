@@ -14,7 +14,7 @@ import Book from './Book';
 import { fetchBooks } from './actions';
 import { books } from './selectors';
 
-import { showNotification } from '../../actions/notification';
+import { showNotification } from '../Notification/actions';
 
 class Home extends Component {
   static propTypes = {

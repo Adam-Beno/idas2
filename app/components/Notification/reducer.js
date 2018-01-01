@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import {
   SHOW_NOTIFICATION,
   DISMISS_NOTIFICATION,
-} from '../constants/notification';
+} from './constants';
 
 const initialState = fromJS({
   message: '',
@@ -26,4 +26,3 @@ function notificationReducer(state = initialState, action) {
 
 
 export default notificationReducer;
-

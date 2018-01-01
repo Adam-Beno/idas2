@@ -8,8 +8,8 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 
-import { message, displayNotification } from '../selectors/notification';
-import { dismissNotification } from '../actions/notification';
+import { message, displayNotification } from './selectors';
+import { dismissNotification } from './actions';
 
 const Notification = props => (
   <Snackbar

@@ -3,8 +3,8 @@ import { routerReducer as router } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form/immutable';
 
 // CUSTOM REDUCERS
-import appReducer from './app';
-import notificationReducer from './notification';
+import appReducer from '../components/App/reducer';
+import notificationReducer from '../components/Notification/reducer';
 import bookCardReducer from '../components/Home/Book/reducer';
 import authorAddReducer from '../components/Author/Add/reducer';
 import authorReducer from '../components/Author/reducer';
