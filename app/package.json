@@ -10,15 +10,11 @@
     "url": "https://github.com/chentsulin"
   },
   "scripts": {
-    "postinstall": "electron-rebuild",
-    "electron-rebuild": "electron-rebuild"
+    "postinstall": "npm rebuild --runtime=electron --target=1.7.3 --disturl=https://atom.io/download/atom-shell --build-from-source"
   },
   "license": "MIT",
   "dependencies": {
     "knex": "^0.14.2",
     "oracledb": "^1.13.1"
-  },
-  "devDependencies": {
-    "electron-rebuild": "^1.6.0"
   }
 }

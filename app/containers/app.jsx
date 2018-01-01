@@ -28,13 +28,13 @@ import FullscreenIcon from 'material-ui-icons/Fullscreen';
 import FullscreenExitIcon from 'material-ui-icons/FullscreenExit';
 import RemoveIcon from 'material-ui-icons/Remove';
 
-import { switchMenuState, switchWindowState } from '../../actions/app';
-import { menuState, maximized } from '../../selectors/app';
-import styles from './styles';
+import { switchMenuState, switchWindowState } from '../actions/app';
+import { menuState, maximized } from '../selectors/app';
+import styles from '../styles/app';
 
-import Notification from '../../components/notification';
+import Notification from '../components/notification';
 
-import electron from '../../utils/electron';
+import electron from '../utils/electron';
 
 class App extends React.Component {
   static propTypes = {
