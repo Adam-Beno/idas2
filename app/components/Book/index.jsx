@@ -44,7 +44,7 @@ class Book extends Component {
   }
 
   async getData() {
-    let results = await knex('BOOK').select();
+    let results = await knex('BOOKS').select();
     results = _map(results, (value) => _mapKeys(value, (v, k) => _camelCase(k)));
     this.props.setData(results);
   }

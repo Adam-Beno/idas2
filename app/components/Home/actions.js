@@ -1,11 +1,4 @@
-import { SET_BOOKS, FETCH_BOOKS, FETCH_BOOKS_FAILED, FETCH_BOOKS_SUCCEEDED } from './constants';
-
-export function getBooks(books) {
-  return {
-    type: SET_BOOKS,
-    books,
-  };
-}
+import { FETCH_BOOKS, FETCH_BOOKS_FAILED, FETCH_BOOKS_SUCCEEDED } from './constants';
 
 export function fetchBooks() {
   return {

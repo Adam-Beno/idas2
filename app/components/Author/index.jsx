@@ -22,37 +22,31 @@ import IconButton from 'material-ui/IconButton';
 
 import styles from './styles';
 import knex from '../../utils/knex';
-import { setData } from './actions';
-import { data } from './selectors';
+import { fetchAuthors, deleteAuthor } from './actions';
+import { authors } from './selectors';
 
 class Author extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    setData: propTypes.func.isRequired,
-    data: propTypes.array.isRequired, // eslint-disable-line
+    authors: propTypes.object.isRequired, // eslint-disable-line
+    fetchAuthors: propTypes.func.isRequired,
+    deleteAuthor: propTypes.func.isRequired,
   };
 
   constructor() {
     super();
 
-    this.getData = this.getData.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-
-
-    this.getData();
   }
 
-  async getData() {
-    let results = await knex('AUTHOR').select();
-    results = _map(results, (value) => _mapKeys(value, (v, k) => _toLower(k)));
-    this.props.setData(results);
+  componentWillMount() {
+    this.props.fetchAuthors();
   }
 
   async handleDelete(id) {
-    await knex('AUTHOR').where('ID', id).del();
-    this.getData();
+    this.props.deleteAuthor(id);
   }
 
   handleEdit(id) {
@@ -84,7 +78,7 @@ class Author extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.data.map(n => (
+                {props.authors.toJS().map(n => (
                   <TableRow key={n.id}>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.surname}</TableCell>
@@ -111,13 +105,14 @@ class Author extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  data,
+  authors,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    setData: (d) => dispatch(setData(d)),
+    fetchAuthors: () => dispatch(fetchAuthors()),
+    deleteAuthor: id => dispatch(deleteAuthor(id)),
   };
 }
 

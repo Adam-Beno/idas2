@@ -1,5 +1,4 @@
 /* eslint-disable */
-export const SET_BOOKS = 'HOME/SET_BOOKS';
 export const FETCH_BOOKS = 'HOME/FETCH_BOOKS';
 export const FETCH_BOOKS_SUCCEEDED = 'HOME/FETCH_BOOKS_SUCCEEDED';
 export const FETCH_BOOKS_FAILED = 'HOME/FETCH_BOOKS_FAILED';

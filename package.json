@@ -141,6 +141,7 @@
     "electron": "^1.6.10",
     "electron-builder": "^19.8.0",
     "electron-devtools-installer": "^2.2.0",
+    "electron-rebuild": "^1.6.0",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
     "eslint": "^3.19.0",
@@ -195,7 +196,7 @@
     "history": "^4.6.3",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
-    "material-ui": "^1.0.0-beta.23",
+    "material-ui": "^1.0.0-beta.26",
     "material-ui-icons": "^1.0.0-beta.17",
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
@@ -214,7 +215,8 @@
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "validator": "^9.2.0"
   },
   "devEngines": {
     "node": ">=7.x",

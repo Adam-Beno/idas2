@@ -1,8 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects';
 
-import Book from '../models/book';
-import { FETCH_BOOKS, FETCH_BOOKS_SUCCEEDED, FETCH_BOOKS_FAILED } from '../components/Home/constants';
-import { SHOW_NOTIFICATION } from '../components/Notification/constants';
+import Book from '../../models/book';
+import { FETCH_BOOKS, FETCH_BOOKS_SUCCEEDED, FETCH_BOOKS_FAILED } from './constants';
+import { SHOW_NOTIFICATION } from '../Notification/constants';
 
 export function* fetchBooks() {
   try {

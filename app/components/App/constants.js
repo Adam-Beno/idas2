@@ -1,2 +1,2 @@
-/* eslint-disable */
 export const SWITCH_MENU_STATE = 'APP/SWITCH_MENU_STATE';
+export const SWITCH_WINDOW_STATE = 'APP/SWITCH_WINDOW_STATE';

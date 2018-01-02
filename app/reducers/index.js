@@ -6,9 +6,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
 import appReducer from '../components/App/reducer';
 import notificationReducer from '../components/Notification/reducer';
 import bookCardReducer from '../components/Home/Book/reducer';
-import authorAddReducer from '../components/Author/Add/reducer';
 import authorReducer from '../components/Author/reducer';
-import authorEditReducer from '../components/Author/Edit/reducer';
 import printerAddReducer from '../components/Printer/Add/reducer';
 import printerReducer from '../components/Printer/reducer';
 import printerEditReducer from '../components/Printer/Edit/reducer';
@@ -21,6 +19,7 @@ import motiveEditReducer from '../components/Motive/Edit/reducer';
 import bookAddReducer from '../components/Book/Add/reducer';
 import bookReducer from '../components/Book/reducer';
 import homeReducer from '../components/Home/reducer';
+import userReducer from '../components/User/reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -28,9 +27,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   notification: notificationReducer,
   bookCard: bookCardReducer,
-  authorAdd: authorAddReducer,
   author: authorReducer,
-  authorEdit: authorEditReducer,
   printerAdd: printerAddReducer,
   printer: printerReducer,
   printerEdit: printerEditReducer,
@@ -43,6 +40,7 @@ const rootReducer = combineReducers({
   bookAdd: bookAddReducer,
   book: bookReducer,
   home: homeReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

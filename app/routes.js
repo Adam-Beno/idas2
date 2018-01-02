@@ -19,6 +19,7 @@ import MotiveAdd from './components/Motive/Add';
 import MotiveEdit from './components/Motive/Edit';
 import Book from './components/Book';
 import BookAdd from './components/Book/Add';
+import User from './components/User';
 
 export default () => (
   <App>
@@ -38,6 +39,7 @@ export default () => (
       <Route path="/motives/edit/:id" component={MotiveEdit} />
       <Route path="/books" component={Book} exact />
       <Route path="/books/add-form" component={BookAdd} />
+      <Route path="/user" component={User} />
     </Switch>
   </App>
 );

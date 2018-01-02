@@ -16,7 +16,7 @@ class Book extends Model {
   }
 
   static async fetchAll() {
-    let data = await knex.raw('SELECT * FROM ( SELECT  b.ID, b.NAME, b.BARCODE, S.PHOTO, a.NAME || \' \' || a.SURNAME AS AUTHOR_NAME, b.PERIOD_OF_ISSUE, b.YEAR_OF_ISSUE, b.DESCRIPTION, ROW_NUMBER() OVER (PARTITION BY b.ID ORDER BY s.BOOK_ID DESC) AS rn FROM BOOK b JOIN SCAN s ON b.ID = s.BOOK_ID JOIN AUTHOR a ON b.AUTHOR_ID = a.ID) WHERE rn = 1');
+    let data = await knex('BOOKS_OVERVIEW');
     data = this.camelCase(data);
     data = _map(data, (item) => this.convertImage(item));
     console.log(data);

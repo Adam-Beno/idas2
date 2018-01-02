@@ -12,7 +12,7 @@ import Button from 'material-ui/Button';
 
 import Book from './Book';
 import { fetchBooks } from './actions';
-import { books } from './selectors';
+import { books, fetchFailed } from './selectors';
 
 import { showNotification } from '../Notification/actions';
 
@@ -20,6 +20,7 @@ class Home extends Component {
   static propTypes = {
     books: propTypes.object.isRequired,
     fetchBooks: propTypes.func.isRequired,
+    fetchFailed: propTypes.bool.isRequired,
   };
 
   constructor() {
@@ -40,7 +41,7 @@ class Home extends Component {
     const { props } = this;
     return (
       <div>
-        {props.books.size > 0 ? (
+        {!props.fetchFailed > 0 ? (
           <Grid container>
             {_map(props.books.toJS(), (val, key) => (
               <Grid item lg={4} sm={6} xs={12} key={key}>
@@ -62,6 +63,7 @@ class Home extends Component {
 
 const mapStateToProps = createStructuredSelector({
   books,
+  fetchFailed,
 });
 
 function mapDispatchToProps(dispatch) {
