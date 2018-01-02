@@ -24,4 +24,6 @@ class Book extends Model {
   }
 }
 
+Book.table = 'BOOKS';
+
 export default Book;

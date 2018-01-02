@@ -4,10 +4,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
-import _snakeCase from 'lodash/snakeCase';
-import _mapKeys from 'lodash/mapKeys';
-import _toUpper from 'lodash/toUpper';
-import _omit from 'lodash/omit';
 
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
@@ -16,6 +12,7 @@ import Typography from 'material-ui/Typography';
 import styles from './styles';
 import { update, fetch } from '../../../crud/actions';
 import { loading, data } from '../../../crud/selectors';
+
 import Model from '../../../models/printer';
 
 import EditForm from './form';
@@ -61,8 +58,8 @@ class PrinterAdd extends Component {
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
-            {!props.loading &&
-              <EditForm onSubmit={this.handleSubmit} initialValues={props.data.get('printers').toJS()[0]} />}
+            {(!props.loading && props.data.has('printers')) &&
+              <EditForm onSubmit={this.handleSubmit} initialValues={props.data.get('printers').first()} />}
           </CardContent>
         </Card>
       </div>

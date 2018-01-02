@@ -11,8 +11,9 @@ import Typography from 'material-ui/Typography';
 
 
 import styles from './styles';
-import { fetchAuthor, updateAuthor } from '../actions';
-import { author, loading } from '../selectors';
+import { update, fetch } from '../../../crud/actions';
+import { data, loading } from '../../../crud/selectors';
+import Model from '../../../models/author';
 
 import EditForm from './form';
 
@@ -25,9 +26,9 @@ class AuthorEdit extends Component {
         id: propTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
-    fetchAuthor: propTypes.func.isRequired,
-    updateAuthor: propTypes.func.isRequired,
-    author: propTypes.object.isRequired, // eslint-disable-line
+    fetch: propTypes.func.isRequired,
+    update: propTypes.func.isRequired,
+    data: propTypes.object.isRequired, // eslint-disable-line
     loading: propTypes.bool.isRequired,
   };
 
@@ -38,26 +39,28 @@ class AuthorEdit extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAuthor(Number(this.props.match.params.id));
+    const id = Number(this.props.match.params.id);
+    this.props.fetch(Model, { id });
   }
 
   handleSubmit(vals) {
-    this.props.updateAuthor(vals.toJSON());
+    this.props.update(Model, vals.toJSON());
     this.props.redirect('/authors');
   }
 
   render() {
     const { props: { classes }, props } = this;
-    console.log(props.author);
+
+    console.log(props);
     return (
       <div>
         <Typography type="title" gutterBottom>
-          Edit author - {props.author.toJSON().nickname}
+          Edit author
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
-            {!props.loading &&
-            <EditForm onSubmit={this.handleSubmit} initialValues={props.author} />}
+            {(!props.loading && props.data.has('authors')) &&
+            <EditForm onSubmit={this.handleSubmit} initialValues={props.data.get('authors').first()} />}
           </CardContent>
         </Card>
       </div>
@@ -66,15 +69,15 @@ class AuthorEdit extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  author,
+  data,
   loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    fetchAuthor: id => dispatch(fetchAuthor(id)),
-    updateAuthor: data => dispatch(updateAuthor(data)),
+    fetch: id => dispatch(fetch(id)),
+    update: (model, vals) => dispatch(update(model, vals)),
   };
 }
 

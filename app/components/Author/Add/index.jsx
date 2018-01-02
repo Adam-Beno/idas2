@@ -10,7 +10,8 @@ import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 
 import styles from './styles';
-import { createAuthor } from '../actions';
+import { create } from '../../../crud/actions';
+import Model from '../../../models/author';
 
 import AddAuthorForm from './form';
 
@@ -18,7 +19,7 @@ class Author extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    createAuthor: propTypes.func.isRequired,
+    create: propTypes.func.isRequired,
   };
 
   constructor() {
@@ -28,7 +29,7 @@ class Author extends Component {
   }
 
   handleSubmit(values) {
-    this.props.createAuthor(values.toJSON());
+    this.props.create(Model, values.toJSON());
     this.props.redirect('/authors');
   }
 
@@ -56,7 +57,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    createAuthor: (data) => dispatch(createAuthor(data)),
+    create: (model, vals) => dispatch(create(model, vals)),
   };
 }
 

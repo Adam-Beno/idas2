@@ -21,17 +21,19 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import IconButton from 'material-ui/IconButton';
 
 import styles from './styles';
-import knex from '../../utils/knex';
-import { fetchAuthors, deleteAuthor } from './actions';
-import { authors } from './selectors';
+import { fetch, del } from '../../crud/actions';
+import { loading, data } from '../../crud/selectors';
+import Model from '../../models/author';
+
 
 class Author extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    authors: propTypes.object.isRequired, // eslint-disable-line
-    fetchAuthors: propTypes.func.isRequired,
-    deleteAuthor: propTypes.func.isRequired,
+    data: propTypes.object.isRequired,
+    fetch: propTypes.func.isRequired,
+    del: propTypes.func.isRequired,
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
@@ -42,11 +44,11 @@ class Author extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAuthors();
+    this.props.fetch(Model);
   }
 
   async handleDelete(id) {
-    this.props.deleteAuthor(id);
+    this.props.del(Model, id);
   }
 
   handleEdit(id) {
@@ -77,8 +79,9 @@ class Author extends Component {
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
+              {(!props.loading && props.data.has('authors')) &&
               <TableBody>
-                {props.authors.toJS().map(n => (
+                {props.data.get('authors').toJS().map(n => (
                   <TableRow key={n.id}>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.surname}</TableCell>
@@ -95,7 +98,7 @@ class Author extends Component {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
+              </TableBody>}
             </Table>
           </CardContent>
         </Card>
@@ -105,14 +108,15 @@ class Author extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  authors,
+  data,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    fetchAuthors: () => dispatch(fetchAuthors()),
-    deleteAuthor: id => dispatch(deleteAuthor(id)),
+    fetch: (model) => dispatch(fetch(model)),
+    del: (model, id) => dispatch(del(model, id)),
   };
 }
 
