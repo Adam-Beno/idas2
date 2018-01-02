@@ -24,7 +24,6 @@ import InfoComponent from './Info';
 import ImageComponent from './Images';
 import knex from '../../../utils/knex';
 
-
 function getSteps() {
   return ['Fill in the book details', 'Add thumbnail photo'];
 }
@@ -49,7 +48,7 @@ class BookAdd extends Component {
     setNewBookId: propTypes.func.isRequired, // eslint-disable-line
     step: propTypes.number.isRequired, // eslint-disable-line
     info: propTypes.object.isRequired, // eslint-disable-line
-    files: propTypes.array.isRequired, // eslint-disable-line
+    files: propTypes.object.isRequired, // eslint-disable-line
   };
 
   constructor() {

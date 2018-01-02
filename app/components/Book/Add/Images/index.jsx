@@ -37,7 +37,7 @@ class Images extends Component {
     redirect: propTypes.func.isRequired, // eslint-disable-line
     info: propTypes.object.isRequired, // eslint-disable-line
     dropFiles: propTypes.func.isRequired, // eslint-disable-line
-    files: propTypes.array.isRequired, // eslint-disable-line
+    files: propTypes.object.isRequired, // eslint-disable-line
     newBookId: propTypes.number.isRequired, // eslint-disable-line
   };
 
@@ -66,7 +66,7 @@ class Images extends Component {
       <div className={classes.root}>
         {props.files.length > 0 ? (
           <GridList className={classes.gridList} cols={2.5}>
-            {_map(props.files, tile => (
+            {_map(props.files.toJS(), tile => (
               <GridListTile key={tile.lastModified}>
                 <img src={tile.preview} alt={tile.name} />
               </GridListTile>

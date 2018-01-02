@@ -21,163 +21,43 @@ import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Input, { InputLabel } from 'material-ui/Input';
 
-import knex from '../../../../utils/knex';
-import { setData, setInfo } from '../actions';
-import { data, info } from '../selectors';
+import { fetch } from '../../../../crud/actions';
+import { loading, data } from '../../../../crud/selectors';
+import AuthorModel from '../../../../models/author';
+import PrinterModel from '../../../../models/printer';
+
+import InfoForm from './form';
 
 class Info extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    setData: propTypes.func.isRequired,
     data: propTypes.object.isRequired, // eslint-disable-line
-    setInfo: propTypes.func.isRequired,
-    info: propTypes.object.isRequired, // eslint-disable-line
+    fetch: propTypes.func.isRequired,
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
     super();
 
-    this.getAuthors = this.getAuthors.bind(this);
-
-    this.getAuthors();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async getAuthors() {
-    const dataSet = {
-      authors: null,
-      printers: null,
-    };
+  componentWillMount() {
+    this.props.fetch(AuthorModel);
+    this.props.fetch(PrinterModel);
+  }
 
-    const resultsAuthor = await knex('AUTHOR').select();
-    dataSet.authors = _map(resultsAuthor, (value) => _mapKeys(value, (v, k) => _toLower(k)));
-
-    const resultsPrinter = await knex('PRINTER').select();
-    dataSet.printers = _map(resultsPrinter, (value) => _mapKeys(value, (v, k) => _toLower(k)));
-
-    this.props.setData(dataSet);
+  handleSubmit(values) {
+    console.log(values);
   }
 
   render() {
     const { props: { classes }, props } = this;
     return (
       <div>
-        {props.data.authors !== null ? (
-          <form id="authorForm" noValidate autoComplete="off">
-            <Grid container>
-              <Grid item xs={12} sm={6} lg={4}>
-                <FormControl>
-                  <InputLabel htmlFor="name-disabled">Printer</InputLabel>
-                  <Select
-                    value={props.info.get('printerId') || 0}
-                    onChange={(e) => props.setInfo('printerId', e.target.value)}
-                    displayEmpty
-                    name="age"
-                    autoWidth
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {_map(props.data.printers, (value) => (<MenuItem value={value.id}>{value.name}</MenuItem>))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <FormControl>
-                  <InputLabel htmlFor="name-disabled">Author</InputLabel>
-                  <Select
-                    value={props.info.get('authorId') || 0}
-                    onChange={(e) => props.setInfo('authorId', e.target.value)}
-                    displayEmpty
-                    name="age"
-                    autoWidth
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {_map(props.data.authors, (value) => (<MenuItem value={value.id}>{value.name}</MenuItem>))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Name"
-                  onChange={(e) => props.setInfo('name', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <TextField
-                  label="Signature"
-                  onChange={(e) => props.setInfo('signature', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <TextField
-                  label="Barcode"
-                  onChange={(e) => props.setInfo('barcode', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <TextField
-                  label="Number of pages"
-                  onChange={(e) => props.setInfo('numberOfPages', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                  type="number"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={6}>
-                <TextField
-                  label="Place of Issue"
-                  onChange={(e) => props.setInfo('placeOfIssue', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={6}>
-                <TextField
-                  label="Language"
-                  onChange={(e) => props.setInfo('language', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={6}>
-                <TextField
-                  label="Year of Issue"
-                  onChange={(e) => props.setInfo('yearOfIssue', e.target.value)}
-                  margin="normal"
-                  type="number"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={6}>
-                <TextField
-                  label="Period of Issue"
-                  onChange={(e) => props.setInfo('periodOfIssue', e.target.value)}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Description"
-                  onChange={(e) => props.setInfo('description', e.target.value)}
-                  margin="normal"
-                  multiline
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          </form>) : (
-            <div>loading...</div>
-          )}
+        {(props.data.has('authors') && props.data.has('printers') && !props.loading) &&
+        <InfoForm onSubmit={this.handleSubmit} authors={props.data.get('authors').toJS()} printers={props.data.get('printers').toJS()} />}
       </div>
     );
   }
@@ -185,14 +65,13 @@ class Info extends Component {
 
 const mapStateToProps = createStructuredSelector({
   data,
-  info,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    setData: (d) => dispatch(setData(d)),
-    setInfo: (key, value) => dispatch(setInfo(key, value)),
+    fetch: model => dispatch(fetch(model)),
   };
 }
 

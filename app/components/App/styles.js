@@ -79,6 +79,7 @@ export default theme => ({
       height: 'calc(100% - 64px)',
       marginTop: 64,
     },
+    overflowY: 'scroll',
   },
   menuLink: {
     textDecoration: 'none',

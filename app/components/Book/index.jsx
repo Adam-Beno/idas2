@@ -20,38 +20,33 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import IconButton from 'material-ui/IconButton';
 
 import styles from './styles';
-import knex from '../../utils/knex';
-import { setData } from './actions';
-import { data } from './selectors';
+import { fetch, del } from '../../crud/actions';
+import { loading, data } from '../../crud/selectors';
+import Model from '../../models/motive';
 
 class Book extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    setData: propTypes.func.isRequired,
     data: propTypes.object.isRequired, // eslint-disable-line
+    fetch: propTypes.func.isRequired,
+    del: propTypes.func.isRequired,
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
     super();
 
-    this.getData = this.getData.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-
-
-    this.getData();
   }
 
-  async getData() {
-    let results = await knex('BOOKS').select();
-    results = _map(results, (value) => _mapKeys(value, (v, k) => _camelCase(k)));
-    this.props.setData(results);
+  componentWillMount() {
+    this.props.fetch(Model);
   }
 
-  async handleDelete(id) {
-    await knex('BOOK').where('ID', id).del();
-    this.getData();
+  handleDelete(id) {
+    this.props.del(Model, id);
   }
 
   handleEdit(id) {
@@ -82,8 +77,9 @@ class Book extends Component {
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
+              {(!props.loading && props.data.has('books')) &&
               <TableBody>
-                {props.data.map(n => (
+                {props.data.get('books').toJS().map(n => (
                   <TableRow key={n.id}>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.signature}</TableCell>
@@ -100,7 +96,7 @@ class Book extends Component {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
+              </TableBody>}
             </Table>
           </CardContent>
         </Card>
@@ -111,12 +107,14 @@ class Book extends Component {
 
 const mapStateToProps = createStructuredSelector({
   data,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    setData: (d) => dispatch(setData(d)),
+    fetch: model => dispatch(fetch(model)),
+    del: (model, id) => dispatch(del(model, id)),
   };
 }
 

@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 import { SHOW_NOTIFICATION } from '../components/Notification/constants';
 import { FETCH_SUCCEEDED, FETCH_FAILED, FETCH, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE_FAILED, DELETE_SUCCEEDED, CREATE, UPDATE, DELETE } from './constants';
@@ -47,7 +47,7 @@ export function* del({ modelClass, id }) {
 }
 
 export function* watchCrudFetch() {
-  yield takeLatest(FETCH, fetch);
+  yield takeEvery(FETCH, fetch);
 }
 
 export function* watchCrudCreate() {
