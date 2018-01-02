@@ -11,9 +11,7 @@ import printerReducer from '../components/Printer/reducer';
 import categoryAddReducer from '../components/Category/Add/reducer';
 import categoryReducer from '../components/Category/reducer';
 import categoryEditReducer from '../components/Category/Edit/reducer';
-import motiveAddReducer from '../components/Motive/Add/reducer';
 import motiveReducer from '../components/Motive/reducer';
-import motiveEditReducer from '../components/Motive/Edit/reducer';
 import bookAddReducer from '../components/Book/Add/reducer';
 import bookReducer from '../components/Book/reducer';
 import homeReducer from '../components/Home/reducer';
@@ -31,9 +29,7 @@ const rootReducer = combineReducers({
   categoryAdd: categoryAddReducer,
   category: categoryReducer,
   categoryEdit: categoryEditReducer,
-  motiveAdd: motiveAddReducer,
   motive: motiveReducer,
-  motiveEdit: motiveEditReducer,
   bookAdd: bookAddReducer,
   book: bookReducer,
   home: homeReducer,

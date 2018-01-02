@@ -19,7 +19,7 @@ const validate = values => {
   return errors;
 };
 
-class AddMotiveForm extends Component {
+class EditMotiveForm extends Component {
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
@@ -34,7 +34,7 @@ class AddMotiveForm extends Component {
         </Grid>
         <br />
         <Button type="submit" raised color="primary" disabled={submitting}>
-          Add new motive
+          Save changes
         </Button>
       </form>
     );
@@ -42,6 +42,6 @@ class AddMotiveForm extends Component {
 }
 
 export default reduxForm({
-  form: 'addMotiveForm',  // a unique identifier for this form
+  form: 'editMotiveForm',  // a unique identifier for this form
   validate,
-})(AddMotiveForm);
+})(EditMotiveForm);
