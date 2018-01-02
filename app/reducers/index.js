@@ -15,6 +15,7 @@ import bookReducer from '../components/Book/reducer';
 import homeReducer from '../components/Home/reducer';
 import userReducer from '../components/User/reducer';
 import crudReducer from '../crud/reducer';
+import catalogReducer from '../components/Catalog/reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   home: homeReducer,
   user: userReducer,
   crud: crudReducer,
+  catalog: catalogReducer,
 });
 
 export default rootReducer;

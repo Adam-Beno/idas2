@@ -39,32 +39,36 @@ class Images extends Component {
     dropFiles: propTypes.func.isRequired, // eslint-disable-line
     files: propTypes.object.isRequired, // eslint-disable-line
     newBookId: propTypes.number.isRequired, // eslint-disable-line
+    handleFilesDrop: propTypes.func.isRequired,
+    bookId: propTypes.number.isRequired,
   };
 
-  async handleDrop(f) {
+  constructor() {
+    super();
+
+    this.handleDrop = this.handleDrop.bind(this);
+  }
+
+  handleDrop(f) {
     _forEach(f, (ele) => {
       toBuffer(ele, (err, buffer) => {
         if (err) throw err;
-
-        const photo = {
-          NAME: f[0].name,
-          PHOTO: buffer,
-          BOOK_ID: this.props.newBookId,
+        const scan = {
+          booksId: this.props.bookId,
+          name: ele.name,
+          photo: buffer,
         };
-
-        knex('SCAN').insert(photo).then((r) => {
-          this.props.dropFiles(f);
-          return r;
-        }).catch(e => console.log(e));
+        this.props.handleFilesDrop(scan);
       });
     });
+    this.props.dropFiles([f[0]]);
   }
 
   render() {
     const { props: { classes }, props } = this;
     return (
       <div className={classes.root}>
-        {props.files.length > 0 ? (
+        {props.files.size > 0 ? (
           <GridList className={classes.gridList} cols={2.5}>
             {_map(props.files.toJS(), tile => (
               <GridListTile key={tile.lastModified}>
@@ -75,7 +79,7 @@ class Images extends Component {
             <p>waiting for pics</p>
           )
         }
-        <DropZone className={classes.drop} onDrop={this.handleDrop.bind(this)}>
+        <DropZone className={classes.drop} onDrop={this.handleDrop}>
           <p>Drop files here, or click to select file upload</p>
         </DropZone>
       </div>

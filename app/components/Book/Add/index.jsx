@@ -17,26 +17,20 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 
 import styles from './styles';
-import { nextStep, completed, setNewBookId } from './actions';
+import { nextStep, completed, setNewBookId, setFormData, setFilesData } from './actions';
 import { step, info, files } from './selectors';
 
 import InfoComponent from './Info';
 import ImageComponent from './Images';
 import knex from '../../../utils/knex';
 
+import { create } from '../../../crud/actions';
+import { createId, createFailed, loading } from '../../../crud/selectors';
+import BookModel from '../../../models/book';
+import ScanModel from '../../../models/scan';
+
 function getSteps() {
   return ['Fill in the book details', 'Add thumbnail photo'];
-}
-
-function getStepContent(index) {
-  switch (index) {
-    case 0:
-      return (<InfoComponent />);
-    case 1:
-      return (<ImageComponent />);
-    default:
-      return 'Unknown step';
-  }
 }
 
 class BookAdd extends Component {
@@ -49,25 +43,46 @@ class BookAdd extends Component {
     step: propTypes.number.isRequired, // eslint-disable-line
     info: propTypes.object.isRequired, // eslint-disable-line
     files: propTypes.object.isRequired, // eslint-disable-line
+    setFilesData: propTypes.func.isRequired,
+    setFormData: propTypes.func.isRequired,
+    createId: propTypes.number.isRequired,
+    create: propTypes.func.isRequired,
+    createFailed: propTypes.bool.isRequired,
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
     super();
 
-    this.handleNextStep = this.handleNextStep.bind(this);
+    this.getStepContent = this.getStepContent.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleFilesDrop = this.handleFilesDrop.bind(this);
   }
 
-  async handleNextStep() {
-    if (this.props.step === 0) {
-      const bookInfo = _mapKeys(this.props.info.toJS(), (value, key) => _toUpper(_snakeCase(key)));
-      const newBookId = await knex('BOOK').returning('ID').insert(bookInfo);
-      this.props.setNewBookId(Number(newBookId[0]));
-      this.props.nextStep();
-    } else if (this.props.step === 1) {
-      // save pictures
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.loading && nextProps.createFailed) {
+      nextProps.completed();
+    }
+  }
 
-      this.props.completed();
-      this.props.redirect('/books');
+  handleFormSubmit(vals) {
+    this.props.create(BookModel, vals.toJSON());
+    this.props.nextStep();
+  }
+
+  handleFilesDrop(file) {
+    this.props.create(ScanModel, file);
+    this.props.completed();
+  }
+
+  getStepContent(index) {
+    switch (index) {
+      case 0:
+        return (<InfoComponent handleSubmit={this.handleFormSubmit} />);
+      case 1:
+        return (<ImageComponent handleFilesDrop={this.handleFilesDrop} bookId={this.props.createId} />);
+      default:
+        return 'Unknown step';
     }
   }
 
@@ -83,28 +98,14 @@ class BookAdd extends Component {
         <Card className={classes.card}>
           <CardContent className={classes.root}>
             <Stepper activeStep={props.step} orientation="vertical">
-              {steps.map((label, index) => {
-                return (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                    <StepContent>
-                      <div>{getStepContent(index)}</div>
-                      <div className={classes.actionsContainer}>
-                        <div>
-                          <Button
-                            raised
-                            color="primary"
-                            onClick={() => this.handleNextStep()}
-                            className={classes.button}
-                          >
-                            {props.step === steps.length - 1 ? 'Finish' : 'Next'}
-                          </Button>
-                        </div>
-                      </div>
-                    </StepContent>
-                  </Step>
-                );
-              })}
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                  <StepContent>
+                    <div>{this.getStepContent(index)}</div>
+                  </StepContent>
+                </Step>
+              ))}
             </Stepper>
           </CardContent>
         </Card>
@@ -117,6 +118,9 @@ const mapStateToProps = createStructuredSelector({
   step,
   info,
   files,
+  createId,
+  createFailed,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -125,6 +129,9 @@ function mapDispatchToProps(dispatch) {
     nextStep: () => dispatch(nextStep()),
     completed: () => dispatch(completed()),
     setNewBookId: id => dispatch(setNewBookId(id)),
+    setFilesData: data => dispatch(setFilesData(data)),
+    setFormData: data => dispatch(setFormData(data)),
+    create: (model, data) => dispatch(create(model, data)),
   };
 }
 

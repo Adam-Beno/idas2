@@ -1,4 +1,4 @@
-import { NEXT_STEP, COMPLETED, SET_DATA, SET_INFO, SET_NEW_BOOK_ID, DROP_FILES } from './constants';
+import { NEXT_STEP, COMPLETED, SET_DATA, SET_INFO, SET_NEW_BOOK_ID, DROP_FILES, SET_FORM_DATA, SET_FILES_DATA } from './constants';
 
 export function nextStep() {
   return {
@@ -40,3 +40,12 @@ export function dropFiles(files) {
     files,
   };
 }
+
+export const setFormData = (data) => ({
+  type: SET_FORM_DATA,
+  data
+});
+export const setFilesData = (data) => ({
+  type: SET_FILES_DATA,
+  data
+});

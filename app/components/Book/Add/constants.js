@@ -6,3 +6,6 @@ export const SET_AUTHOR = 'BOOK_ADD/SET_AUTHOR';
 export const SET_INFO = 'BOOK_ADD/SET_INFO';
 export const SET_NEW_BOOK_ID = 'BOOK_ADD/SET_NEW_BOOK_ID';
 export const DROP_FILES = 'BOOK_ADD/DROP_FILES';
+
+export const SET_FORM_DATA = 'BOOK_ADD/SET_FORM_DATA';
+export const SET_FILES_DATA = 'BOOK_ADD/SET_FILES_DATA';

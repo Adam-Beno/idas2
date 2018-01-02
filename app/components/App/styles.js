@@ -80,6 +80,7 @@ export default theme => ({
       marginTop: 64,
     },
     overflowY: 'scroll',
+    paddingBottom: 25,
   },
   menuLink: {
     textDecoration: 'none',

@@ -22,7 +22,7 @@ import IconButton from 'material-ui/IconButton';
 import styles from './styles';
 import { fetch, del } from '../../crud/actions';
 import { loading, data } from '../../crud/selectors';
-import Model from '../../models/motive';
+import Model from '../../models/book';
 
 class Book extends Component {
   static propTypes = {

@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-import { NEXT_STEP, COMPLETED, SET_DATA, SET_INFO, DROP_FILES, SET_NEW_BOOK_ID } from './constants';
+import { NEXT_STEP, COMPLETED, SET_DATA, SET_INFO, DROP_FILES, SET_NEW_BOOK_ID, SET_FORM_DATA, SET_FILES_DATA } from './constants';
 
 const initialState = fromJS({
   step: 0,
@@ -8,6 +8,7 @@ const initialState = fromJS({
   info: {},
   newBookId: 0,
   files: [],
+  newBookData: {},
 });
 
 function bookAddReducer(state = initialState, action) {
@@ -22,10 +23,16 @@ function bookAddReducer(state = initialState, action) {
         .set('data', action.data);
     case DROP_FILES:
       return state
-        .set('files', action.files);
+        .set('files', fromJS(action.files));
     case SET_INFO:
       return state
         .setIn(['info', action.key], action.value);
+    case SET_FORM_DATA:
+      return state
+        .setIn(['newBookData', 'info'], fromJS(action.data));
+    case SET_FILES_DATA:
+      return state
+        .setIn(['newBookData', 'files'], fromJS(action.data));
     default:
       return state;
     case SET_NEW_BOOK_ID:

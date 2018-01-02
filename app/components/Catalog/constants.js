@@ -1,0 +1,1 @@
+export const SET_OBJECT_TYPE = 'CATALOG/SET_OBJECT_TYPE';

@@ -24,27 +24,9 @@ const Book = (props) => {
     <div>
       <Card className={classes.card}>
         <CardHeader
-          action={
-            <IconButton
-              onClick={(e) => props.switchMenuState(e.currentTarget)}
-              aria-owns={props.menuOpen ? 'simple-menu' : null}
-              aria-haspopup="true"
-            >
-              <MoreVertIcon />
-            </IconButton>
-          }
           title={data.name}
           subheader={`Written by ${data.authorName} published in ${data.yearOfIssue || data.periodOfIssue}`}
         />
-        <Menu
-          id="simple-menu"
-          anchorEl={props.anchorEl}
-          open={props.menuOpen}
-          onRequestClose={() => props.switchMenuState()}
-        >
-          <MenuItem onClick={() => props.switchMenuState()}>Edit</MenuItem>
-          <MenuItem onClick={() => props.switchMenuState()}>Delete</MenuItem>
-        </Menu>
         <CardMedia
           className={classes.media}
           image={data.photo}
@@ -52,7 +34,7 @@ const Book = (props) => {
         />
         <CardContent>
           <Typography component="p">
-            {_truncate(data.description, { length: 170 })}
+            {_truncate(data.description, { length: 160 })}
           </Typography>
         </CardContent>
         <CardActions>
@@ -81,7 +63,7 @@ Book.propTypes = {
     language: propTypes.string.isRequired,
     barcode: propTypes.number.isRequired,
     signature: propTypes.string.isRequired,
-    pages: propTypes.number.isRequired,
+    numberOfPages: propTypes.number.isRequired,
   }).isRequired,
   redirect: propTypes.func.isRequired,
 };

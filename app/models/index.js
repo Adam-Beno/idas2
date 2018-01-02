@@ -37,7 +37,8 @@ class Model {
 
   static async create(data) {
     const newObj = this.mapKeysToSnakeCase(data);
-    await knex(this.table).insert(newObj);
+    const ID = await knex(this.table).returning('ID').insert(newObj);
+    return Number(ID[0]);
   }
 
   static async delete(id) {

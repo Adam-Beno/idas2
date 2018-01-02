@@ -6,6 +6,7 @@ const initialState = fromJS({
   fetchFailed: false,
   deleteFailed: false,
   createFailed: false,
+  createId: -1,
   updateFailed: false,
   loading: false,
 });
@@ -26,10 +27,12 @@ const reducer = (state = initialState, action) => {
         .set('loading', false);
     case CREATE:
       return state
+        .set('createId', -1)
         .set('loading', true);
     case CREATE_SUCCEEDED:
       return state
         .set('createFailed', false)
+        .set('createId', action.id)
         .set('loading', false);
     case CREATE_FAILED:
       return state

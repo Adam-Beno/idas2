@@ -19,7 +19,6 @@ class Book extends Model {
     let data = await knex('BOOKS_OVERVIEW');
     data = this.camelCase(data);
     data = _map(data, (item) => this.convertImage(item));
-    console.log(data);
     return data;
   }
 }

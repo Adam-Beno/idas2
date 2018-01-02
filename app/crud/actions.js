@@ -23,8 +23,9 @@ export const create = (modelClass, data) => ({
   data,
 });
 
-export const createSucceeded = () => ({
+export const createSucceeded = (id) => ({
   type: CREATE_SUCCEEDED,
+  id,
 });
 
 export const createFailed = (error) => ({

@@ -15,8 +15,8 @@ export function* fetch({ modelClass, params }) {
 
 export function* create({ modelClass, data }) {
   try {
-    yield modelClass.create(data);
-    yield put({ type: CREATE_SUCCEEDED });
+    const id = yield modelClass.create(data);
+    yield put({ type: CREATE_SUCCEEDED, id });
     yield put({ type: FETCH, modelClass });
   } catch (error) {
     yield put({ type: CREATE_FAILED, error });

@@ -30,26 +30,17 @@ import InfoForm from './form';
 
 class Info extends Component {
   static propTypes = {
-    classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
     data: propTypes.object.isRequired, // eslint-disable-line
     fetch: propTypes.func.isRequired,
-    loading: propTypes.bool.isRequired,
+    loading: propTypes.bool.isRequired, // eslint-disable-line
+    handleSubmit: propTypes.func.isRequired,
   };
 
-  constructor() {
-    super();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
   componentWillMount() {
     this.props.fetch(AuthorModel);
     this.props.fetch(PrinterModel);
-  }
-
-  handleSubmit(values) {
-    console.log(values);
   }
 
   render() {
@@ -57,7 +48,7 @@ class Info extends Component {
     return (
       <div>
         {(props.data.has('authors') && props.data.has('printers') && !props.loading) &&
-        <InfoForm onSubmit={this.handleSubmit} authors={props.data.get('authors').toJS()} printers={props.data.get('printers').toJS()} />}
+        <InfoForm onSubmit={this.props.handleSubmit} authors={props.data.get('authors').toJS()} printers={props.data.get('printers').toJS()} />}
       </div>
     );
   }

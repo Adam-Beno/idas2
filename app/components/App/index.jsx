@@ -29,6 +29,7 @@ import FullscreenExitIcon from 'material-ui-icons/FullscreenExit';
 import RemoveIcon from 'material-ui-icons/Remove';
 import FormatQuoteIcon from 'material-ui-icons/FormatQuote';
 import LogoutIcon from 'material-ui-icons/ExitToApp';
+import StorageIcon from 'material-ui-icons/Storage';
 
 import { switchMenuState, switchWindowState } from './actions';
 import { logout } from '../User/actions';
@@ -193,6 +194,14 @@ class App extends React.Component {
                       <AccountBoxIcon />
                     </ListItemIcon>
                     <ListItemText primary="User" />
+                  </ListItem>
+                </Link>
+                <Link to="/catalog" className={classes.menuLink}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <StorageIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Catalog" />
                   </ListItem>
                 </Link>
                 {props.authenticated.username &&

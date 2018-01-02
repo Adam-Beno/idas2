@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
 import {
   TextField,
@@ -8,13 +9,40 @@ import {
 import _map from 'lodash/map';
 import { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
+import { FormControl } from 'material-ui/Form';
+import Input, { InputLabel } from 'material-ui/Input';
 import Grid from 'material-ui/Grid';
+import withStyles from 'material-ui/styles/withStyles';
+import styles from './styles';
+
+import SelectWrapper from '../../../../utils/selectWrapper';
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
   const errors = {};
   if (!values.get('name')) {
     errors.name = 'Required';
+  }
+  if (!values.get('authorsId')) {
+    errors.authorsId = 'Required';
+  }
+  if (!values.get('printersId')) {
+    errors.printersId = 'Required';
+  }
+  if (!values.get('signature')) {
+    errors.signature = 'Required';
+  }
+  if (!values.get('barcode')) {
+    errors.barcode = 'Required';
+  }
+  if (!values.get('numberOfPages')) {
+    errors.numberOfPages = 'Required';
+  }
+  if (!values.get('placeOfIssue')) {
+    errors.placeOfIssue = 'Required';
+  }
+  if (!values.get('language')) {
+    errors.language = 'Required';
   }
   if (!values.get('description')) {
     errors.description = 'Required';
@@ -27,6 +55,7 @@ class AddBookForm extends Component {
   static propTypes = {
     authors: propTypes.array.isRequired,
     printers: propTypes.array.isRequired,
+    classes: propTypes.object.isRequired,
   };
 
   render() {
@@ -35,18 +64,18 @@ class AddBookForm extends Component {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12} sm={6} lg={4}>
-            <Field name="authorId" component={Select} placeholder="Author">
+            <Field id="name" label="Author" name="authorsId" component={SelectWrapper} placeholder="Author" className={this.props.classes.selectField} autoWidth>
               <MenuItem value=""><em>None</em></MenuItem>
               {_map(this.props.authors, (value, index) => (
-                <MenuItem value={value.id} key={index}>{value.name}</MenuItem>
+                <MenuItem value={value.id} key={index}>{`${value.name} ${value.surname}`}</MenuItem>
               ))}
             </Field>
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
-            <Field name="printerId" component={Select} placeholder="Printer">
+            <Field id="printer" label="Printer" name="printersId" component={SelectWrapper} placeholder="Printer" className={this.props.classes.selectField} autoWidth>
               <MenuItem value=""><em>None</em></MenuItem>
               {_map(this.props.printers, (value, index) => (
-                <MenuItem value={value.id} key={index}>{value.name}</MenuItem>
+                <MenuItem value={value.id} key={index}>{`${value.name} ${value.surname}`}</MenuItem>
               ))}
             </Field>
           </Grid>
@@ -80,14 +109,16 @@ class AddBookForm extends Component {
         </Grid>
         <br />
         <Button type="submit" raised color="primary" disabled={submitting}>
-          Submit
+          Next
         </Button>
       </form>
     );
   }
 }
-
-export default reduxForm({
-  form: 'addBookForm',  // a unique identifier for this form
-  validate,
-})(AddBookForm);
+export default compose(
+  withStyles(styles),
+  reduxForm({
+    form: 'addBookForm',  // a unique identifier for this form
+    validate,
+  }),
+)(AddBookForm);

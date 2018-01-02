@@ -6,7 +6,7 @@ import { SHOW_NOTIFICATION } from '../Notification/constants';
 
 export function* fetchBooks() {
   try {
-    const data = yield Book.fetchAll();
+    const data = yield Book.fetchCardPreviews();
     yield put({ type: FETCH_BOOKS_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: FETCH_BOOKS_FAILED, error });
