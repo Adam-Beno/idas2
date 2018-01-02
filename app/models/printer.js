@@ -1,16 +1,14 @@
 import _omit from 'lodash/omit';
+import _isEmpty from 'lodash/isEmpty';
 import knex from '../utils/knex';
 import Model from './index';
 
-class Author extends Model {
-  static async fetchAll() {
-    const data = await knex(this.table);
-    return this.camelCase(data);
-  }
-
-  static async fetch(id) {
-    const data = await knex(this.table).where('ID', id);
-    return this.camelCase(data)[0];
+class Printer extends Model {
+  static async fetch(params) {
+    if (_isEmpty(params)) {
+      const data = await knex(this.table);
+      return this.camelCase(data);
+    }
   }
 
   static async create(data) {
@@ -30,6 +28,6 @@ class Author extends Model {
   }
 }
 
-Author.table = 'AUTHORS';
+Printer.table = 'PRINTERS';
 
-export default Author;
+export default Printer;

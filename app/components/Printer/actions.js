@@ -1,8 +1,8 @@
-import { SET_DATA } from './constants';
+import { FETCH_PRINTERS_SUCCEEDED } from './constants';
 
-export function setData(data) {
+export function fetchPrintersSucceeded(data) {
   return {
-    type: SET_DATA,
+    type: FETCH_PRINTERS_SUCCEEDED,
     data,
   };
 }

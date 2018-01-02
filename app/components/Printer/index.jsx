@@ -22,37 +22,35 @@ import IconButton from 'material-ui/IconButton';
 
 import styles from './styles';
 import knex from '../../utils/knex';
-import { setData } from './actions';
-import { data } from './selectors';
+import { FETCH_PRINTERS_SUCCEEDED, DELETE_PRINTERS_SUCCEEDED } from './constants';
+import { fetch, del } from '../../crud/actions';
+import { loading } from '../../crud/selectors';
+import { printers } from './selectors';
+import Model from '../../models/printer';
 
 class Printer extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    setData: propTypes.func.isRequired,
-    data: propTypes.object.isRequired, // eslint-disable-line
+    fetch: propTypes.func.isRequired,
+    printers: propTypes.object.isRequired,
+    loading: propTypes.bool.isRequired,
+    del: propTypes.func.isRequired,
   };
 
   constructor() {
     super();
 
-    this.getData = this.getData.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-
-
-    this.getData();
   }
 
-  async getData() {
-    let results = await knex('PRINTER').select();
-    results = _map(results, (value) => _mapKeys(value, (v, k) => _toLower(k)));
-    this.props.setData(results);
+  componentWillMount() {
+    this.props.fetch(Model, FETCH_PRINTERS_SUCCEEDED);
   }
 
-  async handleDelete(id) {
-    await knex('PRINTER').where('ID', id).del();
-    this.getData();
+  handleDelete(id) {
+    this.props.del(Model, DELETE_PRINTERS_SUCCEEDED, id);
   }
 
   handleEdit(id) {
@@ -81,7 +79,7 @@ class Printer extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.data.map(n => (
+                {props.printers.toJS().map(n => (
                   <TableRow key={n.id}>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.surname}</TableCell>
@@ -105,13 +103,15 @@ class Printer extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  data,
+  printers,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    setData: (d) => dispatch(setData(d)),
+    fetch: (modelClass, succeedAction) => dispatch(fetch(modelClass, succeedAction)),
+    del: (modelClass, succeedAction, id) => dispatch(del(modelClass, succeedAction, id)),
   };
 }
 

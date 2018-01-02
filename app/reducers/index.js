@@ -20,6 +20,7 @@ import bookAddReducer from '../components/Book/Add/reducer';
 import bookReducer from '../components/Book/reducer';
 import homeReducer from '../components/Home/reducer';
 import userReducer from '../components/User/reducer';
+import crudReducer from '../crud/reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   book: bookReducer,
   home: homeReducer,
   user: userReducer,
+  crud: crudReducer,
 });
 
 export default rootReducer;

@@ -1,16 +1,16 @@
 import { fromJS } from 'immutable';
 
-import { SET_DATA } from './constants';
+import { FETCH_PRINTERS_SUCCEEDED } from './constants';
 
 const initialState = fromJS({
-  data: {},
+  printers: [],
 });
 
 function printerReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_DATA:
+    case FETCH_PRINTERS_SUCCEEDED:
       return state
-        .set('data', action.data);
+        .set('printers', fromJS(action.data));
     default:
       return state;
   }
