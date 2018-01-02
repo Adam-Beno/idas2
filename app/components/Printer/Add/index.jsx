@@ -12,17 +12,10 @@ import _omit from 'lodash/omit';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
 
-import knex from '../../../utils/knex';
 import styles from './styles';
-import { CREATE_PRINTERS_SUCCEEDED } from '../constants';
 import { create } from '../../../crud/actions';
-import { loading } from '../../../crud/selectors';
 import Model from '../../../models/printer';
-
 
 import AddForm from './form';
 
@@ -31,7 +24,6 @@ class PrinterAdd extends Component {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
     create: propTypes.func.isRequired,
-    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
@@ -40,14 +32,9 @@ class PrinterAdd extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.loading && !nextProps.loading) {
-      this.props.redirect('/printers');
-    }
-  }
-
   handleSubmit(vals) {
-    this.props.create(Model, CREATE_PRINTERS_SUCCEEDED, vals.toJSON());
+    this.props.create(Model, vals.toJSON());
+    this.props.redirect('/printers');
   }
 
   render() {
@@ -69,13 +56,12 @@ class PrinterAdd extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    create: (model, constant, data) => dispatch(create(model, constant, data)),
+    create: (model, data) => dispatch(create(model, data)),
   };
 }
 

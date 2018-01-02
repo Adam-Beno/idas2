@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 import { FETCH_FAILED, FETCH_SUCCEEDED, FETCH, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE_SUCCEEDED, DELETE_FAILED, CREATE, DELETE, UPDATE } from './constants';
 
 const initialState = fromJS({
+  data: {},
   fetchFailed: false,
   deleteFailed: false,
   createFailed: false,
@@ -16,6 +17,7 @@ const reducer = (state = initialState, action) => {
         .set('loading', true);
     case FETCH_SUCCEEDED:
       return state
+        .setIn(['data', action.modelClass.getTable()], fromJS(action.data))
         .set('fetchFailed', false)
         .set('loading', false);
     case FETCH_FAILED:

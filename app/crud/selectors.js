@@ -7,3 +7,4 @@ export const createFailed = createSelector(crudSelector, app => app.get('createF
 export const deleteFailed = createSelector(crudSelector, app => app.get('deleteFailed'));
 export const updateFailed = createSelector(crudSelector, app => app.get('updateFailed'));
 export const loading = createSelector(crudSelector, app => app.get('loading'));
+export const data = createSelector(crudSelector, app => app.get('data'));

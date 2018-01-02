@@ -1,14 +1,15 @@
 import { FETCH, FETCH_SUCCEEDED, FETCH_FAILED, CREATE, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE, DELETE_SUCCEEDED, DELETE_FAILED } from './constants';
 
-export const fetch = (modelClass, succeedAction, params = {}) => ({
+export const fetch = (modelClass, params = {}) => ({
   type: FETCH,
   modelClass,
-  succeedAction,
   params,
 });
 
-export const fetchSucceeded = () => ({
+export const fetchSucceeded = (modelClass, data) => ({
   type: FETCH_SUCCEEDED,
+  modelClass,
+  data,
 });
 
 export const fetchFailed = (error) => ({
@@ -16,10 +17,9 @@ export const fetchFailed = (error) => ({
   error,
 });
 
-export const create = (modelClass, succeedAction, data) => ({
+export const create = (modelClass, data) => ({
   type: CREATE,
   modelClass,
-  succeedAction,
   data,
 });
 
@@ -32,10 +32,9 @@ export const createFailed = (error) => ({
   error,
 });
 
-export const update = (modelClass, succeedAction, data) => ({
+export const update = (modelClass, data) => ({
   type: UPDATE,
   modelClass,
-  succeedAction,
   data,
 });
 
@@ -48,10 +47,9 @@ export const updateFailed = (error) => ({
   error,
 });
 
-export const del = (modelClass, succeedAction, id) => ({
+export const del = (modelClass, id) => ({
   type: DELETE,
   modelClass,
-  succeedAction,
   id,
 });
 
