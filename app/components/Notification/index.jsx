@@ -15,8 +15,8 @@ const Notification = props => (
   <Snackbar
     anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
     open={props.displayNotification}
-    autoHideDuration={6e3}
-    onRequestClose={() => props.dismissNotification(true)}
+    autoHideDuration={6000}
+    onClose={() => props.dismissNotification(true)}
     SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
     message={<span id="message-id">{props.message}</span>}
     action={[

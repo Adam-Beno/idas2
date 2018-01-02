@@ -33,7 +33,7 @@ class EditPrinterForm extends Component {
         </Grid>
         <br />
         <Button type="submit" raised color="primary" disabled={submitting}>
-          ADD NEW PRINTER
+          Save changes
         </Button>
       </form>
     );
