@@ -4,70 +4,54 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
-import _snakeCase from 'lodash/snakeCase';
-import _camelCase from 'lodash/camelCase';
-import _mapKeys from 'lodash/mapKeys';
-import _toLower from 'lodash/toLower';
-import _toUpper from 'lodash/toUpper';
-import _merge from 'lodash/merge';
-import _omit from 'lodash/omit';
 
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import { CircularProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
 
-import knex from '../../../utils/knex';
+
 import styles from './styles';
-import { editValue, clearStore, setData } from './actions';
-import { values, data } from './selectors';
+import { update, fetch } from '../../../crud/actions';
+import { data, loading } from '../../../crud/selectors';
+import Model from '../../../models/category';
+
+import EditForm from './form';
 
 class CategoryEdit extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
     redirect: propTypes.func.isRequired, // eslint-disable-line
-    values: propTypes.object, // eslint-disable-line
-    editValue: propTypes.func.isRequired, // eslint-disable-line
-    setData: propTypes.func.isRequired, // eslint-disable-line
-    data: propTypes.object.isRequired, // eslint-disable-line
-    clearStore: propTypes.func.isRequired, // eslint-disable-line
     match: propTypes.shape({
       params: propTypes.shape({
         id: propTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    fetch: propTypes.func.isRequired,
+    update: propTypes.func.isRequired,
+    data: propTypes.object.isRequired, // eslint-disable-line
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
     super();
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.getData = this.getData.bind(this);
   }
 
   componentWillMount() {
-    this.getData(Number(this.props.match.params.id));
+    const id = Number(this.props.match.params.id);
+    this.props.fetch(Model, { id });
   }
 
-  async getData(id) {
-    let result = await knex('CATEGORY').where('ID', id).select().first();
-    result = _mapKeys(result, (value, key) => _toLower(_camelCase(key)));
-    this.props.setData(result);
-  }
-
-  async handleSubmit() {
-    const formData = _mapKeys(this.props.values.toJS(), (value, key) => _toUpper(_snakeCase(key)));
-    const oldData = _mapKeys(this.props.data, (value, key) => _toUpper(_snakeCase(key)));
-    await knex('CATEGORY').where('ID', Number(this.props.match.params.id)).update(_omit(_merge(oldData, formData), ['DATA', 'VALUES', 'ID']));
-    this.props.clearStore();
+  handleSubmit(vals) {
+    this.props.update(Model, vals.toJSON());
     this.props.redirect('/categories');
   }
 
   render() {
     const { props: { classes }, props } = this;
+
+    console.log(props);
     return (
       <div>
         <Typography type="title" gutterBottom>
@@ -75,40 +59,8 @@ class CategoryEdit extends Component {
         </Typography>
         <Card className={classes.card}>
           <CardContent className={classes.root}>
-            <form id="printerForm" className={classes.container} noValidate autoComplete="off">
-              {props.data.name ? (
-                <Grid container>
-                  <Grid item xs={12}>
-                    <TextField
-                      name="name"
-                      label="Name"
-                      className={classes.textField}
-                      defaultValue={props.data.name}
-                      onChange={(e) => props.editValue('name', e.target.value)}
-                      margin="normal"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      name="description"
-                      label="Description"
-                      className={classes.textField}
-                      defaultValue={props.data.description}
-                      multiline
-                      onChange={(e) => props.editValue('description', e.target.value)}
-                      margin="normal"
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-              ) : (
-                <CircularProgress className={classes.progress} />)
-              }
-              <Button raised color="primary" className={classes.button} onClick={this.handleSubmit}>
-                SAVE CHANGES
-              </Button>
-            </form>
+            {(!props.loading && props.data.has('categories')) &&
+            <EditForm onSubmit={this.handleSubmit} initialValues={props.data.get('categories').first()} />}
           </CardContent>
         </Card>
       </div>
@@ -117,16 +69,15 @@ class CategoryEdit extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  values,
   data,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(replace(location)),
-    editValue: (key, value, kind = 'string') => dispatch(editValue(key, value, kind)),
-    clearStore: () => dispatch(clearStore()),
-    setData: (d) => dispatch(setData(d)),
+    fetch: id => dispatch(fetch(id)),
+    update: (model, vals) => dispatch(update(model, vals)),
   };
 }
 

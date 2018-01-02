@@ -8,9 +8,7 @@ import notificationReducer from '../components/Notification/reducer';
 import bookCardReducer from '../components/Home/Book/reducer';
 import authorReducer from '../components/Author/reducer';
 import printerReducer from '../components/Printer/reducer';
-import categoryAddReducer from '../components/Category/Add/reducer';
 import categoryReducer from '../components/Category/reducer';
-import categoryEditReducer from '../components/Category/Edit/reducer';
 import motiveReducer from '../components/Motive/reducer';
 import bookAddReducer from '../components/Book/Add/reducer';
 import bookReducer from '../components/Book/reducer';
@@ -26,9 +24,7 @@ const rootReducer = combineReducers({
   bookCard: bookCardReducer,
   author: authorReducer,
   printer: printerReducer,
-  categoryAdd: categoryAddReducer,
   category: categoryReducer,
-  categoryEdit: categoryEditReducer,
   motive: motiveReducer,
   bookAdd: bookAddReducer,
   book: bookReducer,

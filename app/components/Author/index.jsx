@@ -47,7 +47,7 @@ class Author extends Component {
     this.props.fetch(Model);
   }
 
-  async handleDelete(id) {
+  handleDelete(id) {
     this.props.del(Model, id);
   }
 

@@ -15,7 +15,7 @@ class Book extends Model {
     });
   }
 
-  static async fetchAll() {
+  static async fetchCardPreviews() {
     let data = await knex('BOOKS_OVERVIEW');
     data = this.camelCase(data);
     data = _map(data, (item) => this.convertImage(item));
