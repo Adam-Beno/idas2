@@ -15,8 +15,14 @@ class Book extends Model {
     });
   }
 
-  static async fetchCardPreviews() {
-    let data = await knex('BOOKS_OVERVIEW');
+  static async fetchCardPreviews(id = null) {
+    console.log(id);
+    let data = null;
+    const query = knex('BOOKS_OVERVIEW');
+    if (id !== null) {
+      query.where('ID', id);
+    }
+    data = await query;
     data = this.camelCase(data);
     data = _map(data, (item) => this.convertImage(item));
     return data;

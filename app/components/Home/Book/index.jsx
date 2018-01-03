@@ -38,7 +38,7 @@ const Book = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button dense color="primary" onClick={() => props.redirect(`/book-detail/${data.id}`)}>Learn More</Button>
+          <Button dense color="primary" onClick={() => props.redirect(`/detail/${data.id}`)}>Learn More</Button>
         </CardActions>
       </Card>
     </div>

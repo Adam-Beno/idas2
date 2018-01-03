@@ -16,4 +16,14 @@ export default theme => ({
   flexGrow: {
     flex: '1 1 auto',
   },
+  chipRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    marginRight: theme.spacing.unit,
+  },
+  barcode: {
+    transform: 'rotate(90deg)',
+  },
 });

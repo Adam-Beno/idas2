@@ -21,6 +21,7 @@ import Book from './components/Book';
 import BookAdd from './components/Book/Add';
 import User from './components/User';
 import Catalog from './components/Catalog';
+import Detail from './components/Detail';
 
 export default () => (
   <App>
@@ -42,6 +43,7 @@ export default () => (
       <Route path="/books/add-form" component={BookAdd} />
       <Route path="/user" component={User} />
       <Route path="/catalog" component={Catalog} />
+      <Route path="/detail/:id" component={Detail} />
     </Switch>
   </App>
 );
