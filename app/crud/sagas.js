@@ -24,11 +24,11 @@ export function* create({ modelClass, data }) {
   }
 }
 
-export function* update({ modelClass, data }) {
+export function* update({ modelClass, data, params }) {
   try {
     yield modelClass.update(data);
     yield put({ type: UPDATE_SUCCEEDED });
-    yield put({ type: FETCH, modelClass });
+    yield put({ type: FETCH, modelClass, params });
   } catch (error) {
     yield put({ type: UPDATE_FAILED, error });
     yield put({ type: SHOW_NOTIFICATION, message: 'Failed to update' });

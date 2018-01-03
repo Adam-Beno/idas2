@@ -16,6 +16,17 @@ class User extends Model {
     data = this.camelCase(data);
     return _head(data);
   }
+
+  static async authorization(userId) {
+    let data = await knex(this.table)
+    .join('ROLE_USER', 'USERS.ID', '=', 'ROLE_USER.USERS_ID')
+    .join('ROLES', 'ROLES.ID', '=', 'ROLE_USER.ROLES_ID')
+    .select('ROLES.LEVEL AS AUTHORIZATION')
+    .where('USERS.ID', userId);
+    data = this.camelCase(data);
+    return _head(data).authorization;
+  }
+
 }
 
 User.table = 'USERS';

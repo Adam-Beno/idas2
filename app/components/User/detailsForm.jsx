@@ -11,14 +11,8 @@ import User from '../../models/user';
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
   const errors = {};
-  if (!values.get('name')) {
-    errors.name = 'Required';
-  }
   if (!values.get('username')) {
     errors.username = 'Required';
-  }
-  if (!values.get('surname')) {
-    errors.surname = 'Required';
   }
   return errors;
 };
@@ -46,10 +40,10 @@ class UserDetailsForm extends Component {
             <Field name="username" label="Username" component={TextField} fullWidth />
           </Grid>
           <Grid item xs={12} sm={12} lg={4} xl={4}>
-            <Field name="name" label="First name" component={TextField} fullWidth />
+            <Field name="firstName" label="First name" component={TextField} fullWidth />
           </Grid>
           <Grid item xs={12} sm={12} lg={4} xl={4}>
-            <Field name="surname" label="Surname" component={TextField} fullWidth />
+            <Field name="lastName" label="Surname" component={TextField} fullWidth />
           </Grid>
         </Grid>
         <br />

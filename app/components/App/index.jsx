@@ -2,6 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -44,6 +45,7 @@ import { remote as electron } from '../../utils/electron';
 class App extends React.Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
+    redirect: propTypes.func.isRequired, // eslint-disable-line
     switchMenuState: propTypes.func.isRequired, // eslint-disable-line
     menuState: propTypes.bool.isRequired, // eslint-disable-line
     children: propTypes.object.isRequired, // eslint-disable-line
@@ -58,6 +60,7 @@ class App extends React.Component {
 
     this.handleMaximizeClick = this.handleMaximizeClick.bind(this);
     this.onWindowResize = this.onWindowResize.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentWillMount() {
@@ -85,6 +88,11 @@ class App extends React.Component {
       electron.getCurrentWindow().unmaximize();
       this.props.switchWindowState(false);
     }
+  }
+
+  handleLogout() {
+    this.props.logout();
+    this.props.redirect('/user');
   }
 
   render() {
@@ -145,6 +153,7 @@ class App extends React.Component {
                     <ListItemText primary="Dashboard" />
                   </ListItem>
                 </Link>
+                {props.authenticated.username &&
                 <Link to="/books" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -152,7 +161,8 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Books" />
                   </ListItem>
-                </Link>
+                </Link>}
+                {props.authenticated.username &&
                 <Link to="/authors" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -160,7 +170,8 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Authors" />
                   </ListItem>
-                </Link>
+                </Link>}
+                {props.authenticated.username &&
                 <Link to="/printers" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -168,7 +179,8 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Printers" />
                   </ListItem>
-                </Link>
+                </Link>}
+                {props.authenticated.username &&
                 <Link to="/motives" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -176,7 +188,8 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Motives" />
                   </ListItem>
-                </Link>
+                </Link>}
+                {props.authenticated.username &&
                 <Link to="/categories" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -184,7 +197,7 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Categories" />
                   </ListItem>
-                </Link>
+                </Link>}
               </List>
               <Divider />
               <List>
@@ -196,6 +209,7 @@ class App extends React.Component {
                     <ListItemText primary="User" />
                   </ListItem>
                 </Link>
+                {(props.authenticated.username && props.authenticated.authorization === 0) &&
                 <Link to="/catalog" className={classes.menuLink}>
                   <ListItem button>
                     <ListItemIcon>
@@ -203,9 +217,9 @@ class App extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary="Catalog" />
                   </ListItem>
-                </Link>
+                </Link>}
                 {props.authenticated.username &&
-                <ListItem button onClick={() => props.logout()}>
+                <ListItem button onClick={this.handleLogout}>
                   <ListItemIcon>
                     <LogoutIcon />
                   </ListItemIcon>
@@ -232,6 +246,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    redirect: (location = '/') => dispatch(replace(location)),
     switchMenuState: () => dispatch(switchMenuState()),
     switchWindowState: max => dispatch(switchWindowState(max)),
     logout: () => dispatch(logout()),

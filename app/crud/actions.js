@@ -33,10 +33,11 @@ export const createFailed = (error) => ({
   error,
 });
 
-export const update = (modelClass, data) => ({
+export const update = (modelClass, data, params = {}) => ({
   type: UPDATE,
   modelClass,
   data,
+  params,
 });
 
 export const updateSucceeded = () => ({

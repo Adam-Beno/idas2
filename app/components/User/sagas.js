@@ -6,7 +6,8 @@ import { SHOW_NOTIFICATION } from '../Notification/constants';
 
 export function* fetchAuthentication({ username, password }) {
   try {
-    const data = yield User.authenticate(username, password);
+    let data = yield User.authenticate(username, password);
+    data.authorization = yield User.authorization(data.id);
     yield put({ type: AUTHENTICATE_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: AUTHENTICATE_FAILED, error });

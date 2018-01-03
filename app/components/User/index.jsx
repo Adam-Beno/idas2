@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
+import _omit from 'lodash/omit';
 
 import { withStyles } from 'material-ui/styles';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
@@ -21,6 +22,10 @@ import UserDetailsForm from './detailsForm';
 import LoginForm from './loginForm';
 import { tab, authenticated } from './selectors';
 import { tabChange, authenticate } from './actions';
+
+import { update, fetch } from '../../crud/actions';
+import { data, loading } from '../../crud/selectors';
+import Model from '../../models/user';
 
 function TabContainer({ children }) {
   return (
@@ -42,6 +47,10 @@ class User extends Component {
     tabChange: propTypes.func.isRequired,
     authenticated: propTypes.object.isRequired,
     authenticate: propTypes.func.isRequired,
+    update: propTypes.func.isRequired,
+    fetch: propTypes.func.isRequired,
+    data: propTypes.object.isRequired,
+    loading: propTypes.bool.isRequired,
   };
 
   constructor() {
@@ -51,15 +60,20 @@ class User extends Component {
     this.authenticateUser = this.authenticateUser.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.authenticated.id) {
+      this.props.fetch(Model, { id: this.props.authenticated.id });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.authenticated.id && nextProps.authenticated.id) {
+      this.props.fetch(Model, { id: nextProps.authenticated.id });
+    }
+  }
+
   submitUserDetails(vals) {
-    /*
-    const formData = _mapKeys(this.props.values.toJS(), (value, key) => _toUpper(_snakeCase(key)));
-    await knex('MOTIVE').insert(_omit(formData, ['DATA', 'VALUES']));
-    this.props.clearStore();
-    this.props.redirect('/motives');
-    <UserDetailsForm onSubmit={this.handleSubmit} />
-    */
-    console.log(vals);
+    this.props.update(Model, vals.toJSON(), { id: this.props.authenticated.id });
   }
 
   authenticateUser(vals) {
@@ -92,7 +106,8 @@ class User extends Component {
                 </Tabs>
                 {props.tab === 0 &&
                   <TabContainer>
-                    <UserDetailsForm onSubmit={this.submitUserDetails} />
+                    {(!props.loading && props.data.has('users')) &&
+                    <UserDetailsForm onSubmit={this.submitUserDetails} initialValues={props.data.get('users').first()} />}
                   </TabContainer>}
                 {props.tab === 1 &&
                   <TabContainer>
@@ -126,6 +141,8 @@ class User extends Component {
 const mapStateToProps = createStructuredSelector({
   tab,
   authenticated,
+  data,
+  loading,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -133,6 +150,8 @@ function mapDispatchToProps(dispatch) {
     redirect: (location = '/') => dispatch(replace(location)),
     tabChange: (newTab) => dispatch(tabChange(newTab)),
     authenticate: (username, password) => dispatch(authenticate(username, password)),
+    update: (model, values, refetch) => dispatch(update(model, values, refetch)),
+    fetch: (model, params) => dispatch(fetch(model, params)),
   };
 }
 
