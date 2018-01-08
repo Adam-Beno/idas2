@@ -1,6 +1,6 @@
 {
   "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "productName": "IDAS2",
   "version": "0.12.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "ElectronReact",
+    "productName": "IDAS2",
     "appId": "org.develar.ElectronReact",
     "files": [
       "dist/",
@@ -191,7 +191,6 @@
   "dependencies": {
     "blob-to-buffer": "^1.2.6",
     "bluebird": "^3.5.1",
-    "bookshelf": "^0.12.0",
     "devtron": "^1.4.0",
     "electron-debug": "^1.2.0",
     "font-awesome": "^4.7.0",
