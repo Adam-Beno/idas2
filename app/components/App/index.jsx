@@ -33,9 +33,9 @@ import FormatQuoteIcon from 'material-ui-icons/FormatQuote';
 import LogoutIcon from 'material-ui-icons/ExitToApp';
 import StorageIcon from 'material-ui-icons/Storage';
 
-import { switchMenuState, switchWindowState, setPrevPath } from './actions';
+import { switchMenuState, switchWindowState } from './actions';
 import { logout } from '../User/actions';
-import { menuState, maximized, prevPath } from './selectors';
+import { menuState, maximized } from './selectors';
 import { authenticated } from '../User/selectors';
 import styles from './styles';
 
@@ -54,12 +54,6 @@ class App extends React.Component {
     maximized: propTypes.bool.isRequired, // eslint-disable-line
     authenticated: propTypes.object.isRequired,
     logout: propTypes.func.isRequired,
-    setPrevPath: propTypes.func.isRequired,
-    prevPath: propTypes.string.isRequired,
-  }
-
-  static contextTypes = {
-    history: propTypes.object.isRequired,
   }
 
   constructor() {
@@ -71,7 +65,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.context);
     /*
     electron.getCurrentWindow().on('resize', () => {
       this.onWindowResize();
@@ -259,7 +252,6 @@ const mapStateToProps = createStructuredSelector({
   menuState,
   maximized,
   authenticated,
-  prevPath,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -268,7 +260,6 @@ function mapDispatchToProps(dispatch) {
     switchMenuState: () => dispatch(switchMenuState()),
     switchWindowState: max => dispatch(switchWindowState(max)),
     logout: () => dispatch(logout()),
-    setPrevPath: path => dispatch(setPrevPath(path)),
   };
 }
 
