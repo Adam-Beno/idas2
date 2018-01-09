@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 
 import {
-  TAB_CHANGE,
+  CHANGE_TAB,
   AUTHENTICATE_FAILED,
   AUTHENTICATE_SUCCEEDED,
   LOGOUT,
@@ -25,7 +25,7 @@ function userReducer(state = initialState, action) {
     case LOGOUT:
       return state
           .set('authenticated', fromJS({}));
-    case TAB_CHANGE:
+    case CHANGE_TAB:
       return state
         .set('tab', action.tab);
     default:

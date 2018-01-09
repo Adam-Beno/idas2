@@ -6,7 +6,7 @@ import {
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 
-import User from '../../models/user';
+import User from '../../../../models/user';
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!

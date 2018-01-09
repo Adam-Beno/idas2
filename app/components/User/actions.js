@@ -1,17 +1,15 @@
 import {
-  TAB_CHANGE,
+  CHANGE_TAB,
   AUTHENTICATE,
   AUTHENTICATE_FAILED,
   AUTHENTICATE_SUCCEEDED,
   LOGOUT,
  } from './constants';
 
-export function tabChange(tab) {
-  return {
-    type: TAB_CHANGE,
-    tab,
-  };
-}
+export const changeTab = tab => ({
+  type: CHANGE_TAB,
+  tab,
+});
 
 export const logout = () => ({
   type: LOGOUT

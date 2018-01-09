@@ -6,13 +6,9 @@ import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from 'material-ui/styles';
 
-class ThumbnailTab extends React.Component {
+class RoleTab extends React.Component {
   static propTypes = {
-    bookId: propTypes.number.isRequired,
-  }
-
-  componentWillMount() {
-    console.log(this.props.bookId);
+    authenticated: propTypes.object.isRequired,
   }
 
   render() {
@@ -32,5 +28,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-)(ThumbnailTab);
+)(RoleTab);
 

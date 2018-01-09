@@ -1,8 +1,9 @@
 export default () => ({
   root: {
-    paddingTop: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
+    minHeight: 200,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    padding: 25,
   },
   loginRoot: {
     justifyContent: 'center',

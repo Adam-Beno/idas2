@@ -18,7 +18,7 @@ class InfoTab extends React.Component {
   render() {
     const { props: { classes }, props } = this;
     return (
-      <div>dasdass</div>
+      <div>NYI</div>
     );
   }
 
