@@ -1,25 +1,16 @@
 import { fromJS } from 'immutable';
-
-import { EDIT_VALUE, CLEAR_STORE, SET_DATA } from './constants';
+import { CHANGE_TAB } from './constants';
 
 const initialState = fromJS({
-  values: {},
-  data: {},
+  tab: 0,
 });
 
-function motiveAddReducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
-    case EDIT_VALUE:
+    case CHANGE_TAB:
       return state
-        .setIn(['values', action.key], (action.kind !== 'number') ? action.value : Number(action.value));
-    case CLEAR_STORE:
-      return initialState;
-    case SET_DATA:
-      return state
-        .set('data', action.data);
+        .set('tab', action.tab);
     default:
       return state;
   }
-}
-
-export default motiveAddReducer;
+};

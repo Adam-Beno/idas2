@@ -12,6 +12,7 @@ import categoryReducer from '../components/Category/reducer';
 import motiveReducer from '../components/Motive/reducer';
 import bookAddReducer from '../components/Book/Add/reducer';
 import bookReducer from '../components/Book/reducer';
+import bookEditReducer from '../components/Book/Edit/reducer';
 import homeReducer from '../components/Home/reducer';
 import userReducer from '../components/User/reducer';
 import crudReducer from '../crud/reducer';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   category: categoryReducer,
   motive: motiveReducer,
   bookAdd: bookAddReducer,
+  bookEdit: bookEditReducer,
   book: bookReducer,
   home: homeReducer,
   user: userReducer,

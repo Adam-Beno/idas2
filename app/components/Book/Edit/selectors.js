@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-const motiveEditSelector = state => state.get('motiveEdit');
+const selector = state => state.get('bookEdit');
 
-export const values = createSelector(motiveEditSelector, app => app.get('values'));
-export const data = createSelector(motiveEditSelector, app => app.get('data'));
+export const tab = createSelector(selector, app => app.get('tab'));

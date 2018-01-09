@@ -21,7 +21,7 @@ import PageNumberIcon from 'material-ui-icons/FormatListNumbered';
 import BarcodeIcon from 'material-ui-icons/ViewHeadline';
 import BookIcon from 'material-ui-icons/Book';
 import InfoIcon from 'material-ui-icons/Info';
-import BackIcon from 'material-ui-icons/ArrowBack';
+import BackIcon from 'material-ui-icons/NavigateBefore';
 
 import { fetchBook } from './actions';
 import { book, loading } from './selectors';
