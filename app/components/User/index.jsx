@@ -30,18 +30,6 @@ import InfoTab from './tabs/UserInfo';
 import PasswordTab from './tabs/Password';
 import RoleTab from './tabs/Role';
 
-function TabContainer({ children }) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: propTypes.node.isRequired,
-};
-
 class User extends Component {
   static propTypes = {
     classes: propTypes.object.isRequired, // eslint-disable-line
