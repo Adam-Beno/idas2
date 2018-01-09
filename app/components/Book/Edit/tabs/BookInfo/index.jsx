@@ -6,9 +6,8 @@ import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from 'material-ui/styles';
 
-class BookEdit extends React.Component {
+class InfoTab extends React.Component {
   static propTypes = {
-    classes: propTypes.object.isRequired,
     bookId: propTypes.number.isRequired,
   }
 
@@ -33,5 +32,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-)(BookEdit);
+)(InfoTab);
 

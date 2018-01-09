@@ -19,6 +19,8 @@ import { changeTab } from './actions';
 import { tab } from './selectors';
 
 import BookInfoTab from './tabs/BookInfo';
+import ThumbnailTab from './tabs/Thumbnail';
+import DecorationTab from './tabs/Decorations';
 
 class BookEdit extends React.Component {
   static propTypes = {
@@ -70,6 +72,8 @@ class BookEdit extends React.Component {
         </AppBar>
         <Paper className={classes.root}>
           {props.tab === 0 && <BookInfoTab bookId={1} />}
+          {props.tab === 1 && <ThumbnailTab bookId={1} />}
+          {props.tab === 2 && <DecorationTab bookId={1} />}
         </Paper>
       </div>
 
