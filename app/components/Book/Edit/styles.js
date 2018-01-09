@@ -4,5 +4,6 @@ export default theme => ({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     padding: 25,
+    marginBottom: 50,
   },
 });
