@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from 'material-ui/styles';
@@ -63,17 +63,12 @@ class Decoration extends React.Component {
     this.handleBack = this.handleBack.bind(this);
   }
 
-  componentWillMount() {
-
-  }
-
   handleBack() {
-    console.log('I WANT BACK');
+    this.props.history.goBack();
   }
 
   render() {
     const { props: { classes, data }, props } = this;
-    console.log(props);
     return (
       <div className={classes.root}>
         {(!props.loading) ? (
@@ -147,7 +142,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    redirect: (location = '/') => dispatch(replace(location)),
+    redirect: (location = '/') => dispatch(push(location)),
   };
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from 'material-ui/styles';
@@ -11,8 +11,7 @@ import Grid from 'material-ui/Grid';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
-import IconButton from 'material-ui/IconButton';
+import { CircularProgress } from 'material-ui/Progress';
 
 
 import LocationIcon from 'material-ui-icons/LocationOn';
@@ -171,10 +170,8 @@ class Detail extends React.Component {
             </Grid>
           </div>
         ) : (
-            <div>
-              Loading..
-          </div>
-          )}
+          <CircularProgress />
+        )}
       </div>
     );
   }
@@ -187,7 +184,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    redirect: (location = '/') => dispatch(replace(location)),
+    redirect: (location = '/') => dispatch(push(location)),
     fetchBook: id => dispatch(fetchBook(id)),
   };
 }

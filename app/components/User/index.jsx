@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from 'material-ui/styles';
@@ -123,7 +123,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    redirect: (location = '/') => dispatch(replace(location)),
+    redirect: (location = '/') => dispatch(push(location)),
     changeTab: (newTab) => dispatch(changeTab(newTab)),
     authenticate: (username, password) => dispatch(authenticate(username, password)),
     update: (model, values, refetch) => dispatch(update(model, values, refetch)),

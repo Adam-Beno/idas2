@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import _truncate from 'lodash/truncate';
 
@@ -76,7 +76,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     switchMenuState: (target) => dispatch(switchMenuState(target)),
-    redirect: (location = '/') => dispatch(replace(location)),
+    redirect: (location = '/') => dispatch(push(location)),
   };
 }
 
