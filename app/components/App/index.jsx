@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import os from 'os';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
@@ -64,6 +65,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    console.log(os.platform());
     /*
     electron.getCurrentWindow().on('resize', () => {
       this.onWindowResize();
@@ -82,10 +84,18 @@ class App extends React.Component {
 
   handleMaximizeClick() {
     if (!electron.getCurrentWindow().isMaximized()) {
-      electron.getCurrentWindow().maximize();
+      if (os.platform() === 'darwin') {
+        electron.getCurrentWindow().setFullScreen(true);
+      } else {
+        electron.getCurrentWindow().maximize();
+      }
       this.props.switchWindowState(true);
     } else {
-      electron.getCurrentWindow().unmaximize();
+      if (os.platform() === 'darwin') {
+        electron.getCurrentWindow().setFullScreen(false);
+      } else {
+        electron.getCurrentWindow().unmaximize();
+      }
       this.props.switchWindowState(false);
     }
   }
@@ -122,8 +132,8 @@ class App extends React.Component {
                 {!props.maximized ? (
                   <FullscreenIcon />
                 ) : (
-                  <FullscreenExitIcon />
-                )}
+                    <FullscreenExitIcon />
+                  )}
               </IconButton>
               <IconButton className={classes.titleButtton} aria-label="Quit" color="contrast" onClick={() => electron.getCurrentWindow().close()}>
                 <CloseIcon />
@@ -154,50 +164,50 @@ class App extends React.Component {
                   </ListItem>
                 </Link>
                 {props.authenticated.username &&
-                <Link to="/books" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <LibraryBooksIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Books" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/books" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <LibraryBooksIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Books" />
+                    </ListItem>
+                  </Link>}
                 {props.authenticated.username &&
-                <Link to="/authors" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <FormatQuoteIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Authors" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/authors" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <FormatQuoteIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Authors" />
+                    </ListItem>
+                  </Link>}
                 {props.authenticated.username &&
-                <Link to="/printers" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <FontDownloadIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Printers" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/printers" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <FontDownloadIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Printers" />
+                    </ListItem>
+                  </Link>}
                 {props.authenticated.username &&
-                <Link to="/motives" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <StyleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Motives" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/motives" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <StyleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Motives" />
+                    </ListItem>
+                  </Link>}
                 {props.authenticated.username &&
-                <Link to="/categories" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <BookmarkIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Categories" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/categories" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <BookmarkIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Categories" />
+                    </ListItem>
+                  </Link>}
               </List>
               <Divider />
               <List>
@@ -210,21 +220,21 @@ class App extends React.Component {
                   </ListItem>
                 </Link>
                 {(props.authenticated.username && props.authenticated.authorization === 0) &&
-                <Link to="/catalog" className={classes.menuLink}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <StorageIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Catalog" />
-                  </ListItem>
-                </Link>}
+                  <Link to="/catalog" className={classes.menuLink}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <StorageIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Catalog" />
+                    </ListItem>
+                  </Link>}
                 {props.authenticated.username &&
-                <ListItem button onClick={this.handleLogout}>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Logout" />
-                </ListItem>}
+                  <ListItem button onClick={this.handleLogout}>
+                    <ListItemIcon>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>}
               </List>
             </div>
           </Drawer>
