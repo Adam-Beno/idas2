@@ -86,7 +86,7 @@ class EditBookForm extends Component {
             <Field name="signature" label="Signature" component={TextField} fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
-            <Field name="barcode" label="Barcode" component={TextField} fullWidth />
+            <Field name="barcode" label="Barcode" type="number" component={TextField} fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
             <Field name="numberOfPages" label="Number of pages" type="number" component={TextField} fullWidth />

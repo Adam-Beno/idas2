@@ -20,7 +20,7 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import IconButton from 'material-ui/IconButton';
 
 import styles from './styles';
-import { fetch, del } from '../../crud/actions';
+import { fetch, del, clear } from '../../crud/actions';
 import { loading, data } from '../../crud/selectors';
 import Model from '../../models/book';
 
@@ -32,6 +32,7 @@ class Book extends Component {
     fetch: propTypes.func.isRequired,
     del: propTypes.func.isRequired,
     loading: propTypes.bool.isRequired,
+    clear: propTypes.func.isRequired,
   };
 
   constructor() {
@@ -43,6 +44,10 @@ class Book extends Component {
 
   componentWillMount() {
     this.props.fetch(Model);
+  }
+
+  componentWillUnmount() {
+    this.props.clear();
   }
 
   handleDelete(id) {
@@ -115,6 +120,7 @@ function mapDispatchToProps(dispatch) {
     redirect: (location = '/') => dispatch(replace(location)),
     fetch: model => dispatch(fetch(model)),
     del: (model, id) => dispatch(del(model, id)),
+    clear: () => dispatch(clear()),
   };
 }
 

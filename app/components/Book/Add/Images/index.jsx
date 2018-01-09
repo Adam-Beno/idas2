@@ -8,7 +8,6 @@ import _map from 'lodash/map';
 import _mapKeys from 'lodash/mapKeys';
 import _find from 'lodash/find';
 import _toLower from 'lodash/toLower';
-import DropZone from 'react-dropzone';
 import toBuffer from 'blob-to-buffer';
 import fs from 'fs';
 import _forEach from 'lodash/forEach';
@@ -27,6 +26,7 @@ import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Input, { InputLabel } from 'material-ui/Input';
 
 import knex from '../../../../utils/knex';
+import DropZone from '../../../DropFiles';
 import { setData, setInfo, dropFiles } from '../actions';
 import { info, files, newBookId } from '../selectors';
 import styles from './styles';
@@ -79,9 +79,7 @@ class Images extends Component {
             <p>waiting for pics</p>
           )
         }
-        <DropZone className={classes.drop} onDrop={this.handleDrop}>
-          <p>Drop files here, or click to select file upload</p>
-        </DropZone>
+        <DropZone handleDrop={this.handleDrop} />
       </div>
     );
   }

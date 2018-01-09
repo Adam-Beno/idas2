@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { FETCH_FAILED, FETCH_SUCCEEDED, FETCH, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE_SUCCEEDED, DELETE_FAILED, CREATE, DELETE, UPDATE } from './constants';
+import { FETCH_FAILED, FETCH_SUCCEEDED, FETCH, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE_SUCCEEDED, DELETE_FAILED, CREATE, DELETE, UPDATE, CLEAR } from './constants';
 
 const initialState = fromJS({
   data: {},
@@ -60,6 +60,8 @@ const reducer = (state = initialState, action) => {
       return state
         .set('deleteFailed', true)
         .set('loading', false);
+    case CLEAR:
+      return initialState;
     default:
       return state;
   }

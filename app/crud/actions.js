@@ -1,4 +1,4 @@
-import { FETCH, FETCH_SUCCEEDED, FETCH_FAILED, CREATE, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE, DELETE_SUCCEEDED, DELETE_FAILED } from './constants';
+import { FETCH, FETCH_SUCCEEDED, FETCH_FAILED, CREATE, CREATE_SUCCEEDED, CREATE_FAILED, UPDATE, UPDATE_SUCCEEDED, UPDATE_FAILED, DELETE, DELETE_SUCCEEDED, DELETE_FAILED, CLEAR } from './constants';
 
 export const fetch = (modelClass, params = {}) => ({
   type: FETCH,
@@ -62,4 +62,8 @@ export const deleteSucceeded = () => ({
 export const deleteFailed = (error) => ({
   type: DELETE_FAILED,
   error,
+});
+
+export const clear = () => ({
+  type: CLEAR,
 });

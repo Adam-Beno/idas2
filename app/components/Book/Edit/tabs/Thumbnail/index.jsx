@@ -52,7 +52,7 @@ class ThumbnailTab extends React.Component {
           name: ele.name,
           photo: buffer,
         };
-        this.props.update(ScanModel, scan);
+        this.props.update(ScanModel, scan, { booksId: this.props.bookId });
       });
     });
   }
@@ -85,7 +85,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   fetch: (model, params) => dispatch(fetch(model, params)),
-  update: (model, params) => dispatch(update(model, params)),
+  update: (model, vals, params) => dispatch(update(model, vals, params)),
 });
 
 export default compose(

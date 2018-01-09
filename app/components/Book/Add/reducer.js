@@ -6,7 +6,7 @@ const initialState = fromJS({
   step: 0,
   data: {},
   info: {},
-  newBookId: 0,
+  newBookId: -1,
   files: [],
   newBookData: {},
 });

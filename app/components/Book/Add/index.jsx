@@ -18,7 +18,7 @@ import Button from 'material-ui/Button';
 
 import styles from './styles';
 import { nextStep, completed, setNewBookId, setFormData, setFilesData } from './actions';
-import { step, info, files } from './selectors';
+import { step, info, files, newBookId } from './selectors';
 
 import InfoComponent from './Info';
 import ImageComponent from './Images';
@@ -49,6 +49,7 @@ class BookAdd extends Component {
     create: propTypes.func.isRequired,
     createFailed: propTypes.bool.isRequired,
     loading: propTypes.bool.isRequired,
+    newBookId: propTypes.number.isRequired,
   };
 
   constructor() {
@@ -63,6 +64,13 @@ class BookAdd extends Component {
     if (!nextProps.loading && nextProps.createFailed) {
       nextProps.completed();
     }
+    if (!nextProps.createFailed && nextProps.createId !== -1 && nextProps.files.size > 0 && !nextProps.loading) {
+      this.props.redirect(`/books/edit/${nextProps.newBookId}`);
+      this.props.completed();
+    }
+    if (!nextProps.createFailed && nextProps.createId !== -1 && nextProps.newBookId === -1) {
+      this.props.setNewBookId(nextProps.createId);
+    }
   }
 
   handleFormSubmit(vals) {
@@ -72,7 +80,6 @@ class BookAdd extends Component {
 
   handleFilesDrop(file) {
     this.props.create(ScanModel, file);
-    this.props.completed();
   }
 
   getStepContent(index) {
@@ -121,6 +128,7 @@ const mapStateToProps = createStructuredSelector({
   createId,
   createFailed,
   loading,
+  newBookId,
 });
 
 function mapDispatchToProps(dispatch) {

@@ -18,6 +18,8 @@ import styles from './styles';
 import { changeTab } from './actions';
 import { tab } from './selectors';
 
+import { clear } from '../../../crud/actions';
+
 import BookInfoTab from './tabs/BookInfo';
 import ThumbnailTab from './tabs/Thumbnail';
 import DecorationTab from './tabs/Decorations';
@@ -32,6 +34,7 @@ class BookEdit extends React.Component {
     classes: propTypes.object.isRequired,
     changeTab: propTypes.func.isRequired,
     tab: propTypes.number.isRequired,
+    clear: propTypes.func.isRequired,
   }
 
   constructor() {
@@ -40,9 +43,8 @@ class BookEdit extends React.Component {
     this.handleTabChange = this.handleTabChange.bind(this);
   }
 
-  componentWillMount() {
-    const id = Number(this.props.match.params.id);
-    console.log(id);
+  componentWillUnmount() {
+    this.props.clear();
   }
 
   handleTabChange(event, value) {
@@ -71,9 +73,9 @@ class BookEdit extends React.Component {
           </Tabs>
         </AppBar>
         <Paper className={classes.root}>
-          {props.tab === 0 && <BookInfoTab bookId={1} />}
-          {props.tab === 1 && <ThumbnailTab bookId={1} />}
-          {props.tab === 2 && <DecorationTab bookId={1} />}
+          {props.tab === 0 && <BookInfoTab bookId={Number(props.match.params.id)} />}
+          {props.tab === 1 && <ThumbnailTab bookId={Number(props.match.params.id)} />}
+          {props.tab === 2 && <DecorationTab bookId={Number(props.match.params.id)} />}
         </Paper>
       </div>
 
@@ -88,6 +90,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   changeTab: tabIndex => dispatch(changeTab(tabIndex)),
+  clear: () => dispatch(clear()),
 });
 
 export default compose(

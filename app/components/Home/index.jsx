@@ -6,10 +6,12 @@ import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import _map from 'lodash/map';
 
+import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
 
+import styles from './styles';
 import Book from './Book';
 import { fetchBooks } from './actions';
 import { books, fetchFailed } from './selectors';
@@ -18,6 +20,7 @@ import { showNotification } from '../Notification/actions';
 
 class Home extends Component {
   static propTypes = {
+    classes: propTypes.object.isRequired,
     books: propTypes.object.isRequired,
     fetchBooks: propTypes.func.isRequired,
     fetchFailed: propTypes.bool.isRequired,
@@ -40,7 +43,7 @@ class Home extends Component {
   render() {
     const { props } = this;
     return (
-      <div>
+      <div className={props.classes.root}>
         {!props.fetchFailed > 0 ? (
           <Grid container>
             {_map(props.books.toJS(), (val, key) => (
@@ -75,5 +78,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
+  withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
 )(Home);

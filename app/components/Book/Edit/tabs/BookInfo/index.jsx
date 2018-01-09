@@ -30,9 +30,9 @@ class InfoTab extends React.Component {
   }
 
   componentWillMount() {
+    this.props.fetch(BookModel, { id: this.props.bookId });
     this.props.fetch(AuthorModel);
     this.props.fetch(PrinterModel);
-    this.props.fetch(BookModel, { id: this.props.bookId });
   }
 
   handleSubmit(vals) {

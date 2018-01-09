@@ -10,3 +10,4 @@ export const UPDATE_FAILED = 'CRUD/UPDATE_FAILED';
 export const DELETE = 'CRUD/DELETE';
 export const DELETE_SUCCEEDED = 'CRUD/DELETE_SUCCEEDED';
 export const DELETE_FAILED = 'CRUD/DELETE_FAILED';
+export const CLEAR = 'CRUD/CLEAR';
