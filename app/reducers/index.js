@@ -18,6 +18,7 @@ import userReducer from '../components/User/reducer';
 import crudReducer from '../crud/reducer';
 import catalogReducer from '../components/Catalog/reducer';
 import detailReducer from '../components/Detail/reducer';
+import decorationReducer from '../components/Decoration/reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   crud: crudReducer,
   catalog: catalogReducer,
   detail: detailReducer,
+  decoration: decorationReducer,
 });
 
 export default rootReducer;

@@ -24,6 +24,7 @@ import User from './components/User';
 import Catalog from './components/Catalog';
 import Detail from './components/Detail';
 import Decoration from './components/Decoration';
+import DecorationAdd from './components/Decoration/Add';
 
 export default () => (
   <App>
@@ -47,7 +48,8 @@ export default () => (
       <Route path="/user" component={User} />
       <Route path="/catalog" component={Catalog} />
       <Route path="/detail/:id" component={Detail} />
-      <Route path="/decoration/:id" component={Decoration} />
+      <Route path="/decoration/show/:id" component={Decoration} />
+      <Route path="/decoration/add/:bookId/:decorationId?" component={DecorationAdd} />
     </Switch>
   </App>
 );

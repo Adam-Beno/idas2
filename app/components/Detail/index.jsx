@@ -157,7 +157,7 @@ class Detail extends React.Component {
                 <br />
                 <GridList cellHeight={280} className={classes.gridList} cols={4} spacing={24}>
                   {tileData.map(tile => (
-                    <GridListTile key={tile.img} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/${tile.id}`)}>
+                    <GridListTile key={tile.img} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/show/${tile.id}`)}>
                       <img src={tile.img} alt={tile.title} />
                       <GridListTileBar
                         title={tile.title}

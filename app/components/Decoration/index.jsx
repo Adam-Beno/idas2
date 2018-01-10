@@ -55,6 +55,7 @@ class Decoration extends React.Component {
         id: propTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    history: propTypes.object.isRequired,
   };
 
   constructor() {

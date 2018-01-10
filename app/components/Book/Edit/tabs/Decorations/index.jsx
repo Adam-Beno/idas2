@@ -71,7 +71,7 @@ class DecorationTab extends React.Component {
             </GridListTile>
           ))}
         </GridList>
-        <Button fab color="primary" aria-label="add" className={classes.button}>
+        <Button fab color="primary" aria-label="add" className={classes.button} onClick={() => props.redirect(`/decoration/add/${props.bookId}`)}>
           <AddIcon />
         </Button>
       </div>
