@@ -5,16 +5,6 @@ import knex from '../utils/knex';
 import Model from './index';
 
 class Book extends Model {
-  static convertImage(data) {
-    return _mapValues(data, (val, key) => {
-      if (key === 'photo') {
-        const buff = new Buffer(val);
-        return `data:image/jpeg;base64,${buff.toString('base64')}`;
-      }
-      return val;
-    });
-  }
-
   static async fetchCardPreviews(id = null) {
     console.log(id);
     let data = null;

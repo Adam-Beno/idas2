@@ -6,7 +6,7 @@ import _isEmpty from 'lodash/isEmpty';
 import knex from '../utils/knex';
 import Model from './index';
 
-class Scan extends Model {
+class DecorationPreview extends Model {
   static async fetch(params) {
     console.log();
     let data = {};
@@ -25,6 +25,6 @@ class Scan extends Model {
   }
 }
 
-Scan.table = 'SCANS';
+DecorationPreview.table = 'DECORATION_WITH_SCAN';
 
-export default Scan;
+export default DecorationPreview;

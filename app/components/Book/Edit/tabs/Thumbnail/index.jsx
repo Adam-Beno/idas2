@@ -64,7 +64,7 @@ class ThumbnailTab extends React.Component {
       <Grid container spacing={24}>
         <Grid item xs={12} md={4} className={classes.spinnerRoot}>
           {(!props.loading && props.data.has('scans')) ? (
-            <img className={classes.image} src={ScanModel.convertImage(props.data.get('scans').first().toJS()).photo} alt={props.data.get('scans').first().toJS().name} height={250} />
+            <img className={classes.image} src={props.data.get('scans').first().toJS().photo} alt={props.data.get('scans').first().toJS().name} height={250} />
           ) : (
             <CircularProgress className={classes.progress} />
           )}

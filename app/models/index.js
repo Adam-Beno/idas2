@@ -5,6 +5,7 @@ import _toUpper from 'lodash/toUpper';
 import _snakeCase from 'lodash/snakeCase';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
+import _mapValues from 'lodash/mapValues';
 import knex from '../utils/knex';
 
 class Model {
@@ -18,6 +19,16 @@ class Model {
 
   static getTable() {
     return _camelCase(this.table);
+  }
+
+  static convertImage(data) {
+    return _mapValues(data, (val, key) => {
+      if (key === 'photo') {
+        const buff = new Buffer(val);
+        return `data:image/jpeg;base64,${buff.toString('base64')}`;
+      }
+      return val;
+    });
   }
 
   static async fetch(params) {

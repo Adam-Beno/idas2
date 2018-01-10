@@ -24,40 +24,12 @@ import InfoIcon from 'material-ui-icons/Info';
 import { fetchBook } from './actions';
 import { book, loading } from './selectors';
 
-import styles from './styles';
+import { fetch } from '../../crud/actions';
+import { data, loading as crudLoading } from '../../crud/selectors';
 
-const tileData = [
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg',
-    title: 'Zima',
-    author: 'Jarn Kovl',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2016/03/28/12/35/cat-1285634_960_720.png',
-    title: 'Léto',
-    author: 'Martin Kýžský',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2017/01/16/19/54/soap-bubble-1985092_960_720.jpg',
-    title: 'Podzim',
-    author: 'Catherin Lei',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2018/01/05/23/50/wood-3064114_960_720.jpg',
-    title: 'Cesta',
-    author: 'Catherin Pei',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2015/11/25/09/42/rocks-1061540_960_720.jpg',
-    title: 'Podzim',
-    author: 'Catherin Lei',
-  },
-];
+import DecorationPreviewModel from '../../models/decorationPreview';
+
+import styles from './styles';
 
 class Detail extends React.Component {
   static propTypes = {
@@ -70,11 +42,15 @@ class Detail extends React.Component {
     fetchBook: propTypes.func.isRequired,
     book: propTypes.object.isRequired,
     loading: propTypes.bool.isRequired,
+    fetch: propTypes.func.isRequired,
+    data: propTypes.object.isRequired,
+    crudLoading: propTypes.bool.isRequired,
   };
 
   componentWillMount() {
     const id = Number(this.props.match.params.id);
     this.props.fetchBook(id);
+    this.props.fetch(DecorationPreviewModel, { booksId: id });
   }
 
   render() {
@@ -155,17 +131,18 @@ class Detail extends React.Component {
                   Decorations
                 </Typography>
                 <br />
+                {props.data.has('decorationWithScan') && !props.data.loading &&
                 <GridList cellHeight={280} className={classes.gridList} cols={4} spacing={24}>
-                  {tileData.map(tile => (
-                    <GridListTile key={tile.img} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/show/${tile.id}`)}>
-                      <img src={tile.img} alt={tile.title} />
+                  {props.data.get('decorationWithScan').toJS().map(tile => (
+                    <GridListTile key={tile.id} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/show/${tile.id}`)}>
+                      <img src={tile.photo} alt={tile.name} />
                       <GridListTileBar
-                        title={tile.title}
-                        subtitle={<span>by: {tile.author}</span>}
+                        title={tile.name}
+                        subtitle={<span>by: {tile.nickname}</span>}
                       />
                     </GridListTile>
                   ))}
-                </GridList>
+                </GridList> }
               </Grid>
             </Grid>
           </div>
@@ -180,12 +157,15 @@ class Detail extends React.Component {
 const mapStateToProps = createStructuredSelector({
   book,
   loading,
+  crudLoading,
+  data,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(push(location)),
     fetchBook: id => dispatch(fetchBook(id)),
+    fetch: (model, params) => dispatch(fetch(model, params)),
   };
 }
 
