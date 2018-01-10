@@ -10,67 +10,43 @@ import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 
-import styles from './styles';
+import { fetch } from '../../../../../crud/actions';
+import { data, loading } from '../../../../../crud/selectors';
 
-const tileData = [
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg',
-    title: 'Zima',
-    author: 'Jarn Kovl',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2016/03/28/12/35/cat-1285634_960_720.png',
-    title: 'Léto',
-    author: 'Martin Kýžský',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2017/01/16/19/54/soap-bubble-1985092_960_720.jpg',
-    title: 'Podzim',
-    author: 'Catherin Lei',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2018/01/05/23/50/wood-3064114_960_720.jpg',
-    title: 'Cesta',
-    author: 'Catherin Pei',
-  },
-  {
-    id: 7,
-    img: 'https://cdn.pixabay.com/photo/2015/11/25/09/42/rocks-1061540_960_720.jpg',
-    title: 'Podzim',
-    author: 'Catherin Lei',
-  },
-];
+import DecorationPreviewModel from '../../../../../models/decorationPreview';
+
+import styles from './styles';
 
 class DecorationTab extends React.Component {
   static propTypes = {
     bookId: propTypes.number.isRequired,
     redirect: propTypes.func.isRequired,
     classes: propTypes.object.isRequired,
+    fetch: propTypes.func.isRequired,
+    loading: propTypes.bool.isRequired,
+    data: propTypes.object.isRequired,
   }
 
   componentWillMount() {
-    console.log(this.props.bookId);
+    this.props.fetch(DecorationPreviewModel, { booksId: this.props.bookId });
   }
 
   render() {
     const { props: { classes }, props } = this;
     return (
       <div>
+        {props.data.has('decorationWithScan') && !props.loading &&
         <GridList cellHeight={280} className={classes.gridList} cols={4} spacing={24}>
-          {tileData.map(tile => (
-            <GridListTile key={tile.img} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/${tile.id}`)}>
-              <img src={tile.img} alt={tile.title} />
+          {props.data.get('decorationWithScan').toJS().map(tile => (
+            <GridListTile key={tile.id} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/show/${tile.id}`)}>
+              <img src={tile.photo} alt={tile.name} />
               <GridListTileBar
-                title={tile.title}
-                subtitle={<span>by: {tile.author}</span>}
+                title={tile.name}
+                subtitle={<span>by: {tile.nickname}</span>}
               />
             </GridListTile>
           ))}
-        </GridList>
+        </GridList>}
         <Button fab color="primary" aria-label="add" className={classes.button} onClick={() => props.redirect(`/decoration/add/${props.bookId}`)}>
           <AddIcon />
         </Button>
@@ -81,10 +57,13 @@ class DecorationTab extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  data,
+  loading,
 });
 
 const mapDispatchToProps = dispatch => ({
   redirect: (location) => dispatch(push(location)),
+  fetch: (model, params) => dispatch(fetch(model, params)),
 });
 
 export default compose(

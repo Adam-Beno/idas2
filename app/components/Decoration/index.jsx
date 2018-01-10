@@ -15,9 +15,11 @@ import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
 
-
+import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import LocationIcon from 'material-ui-icons/LocationOn';
+import AddIcon from 'material-ui-icons/Add';
 import LanguageIcon from 'material-ui-icons/Language';
 import PageNumberIcon from 'material-ui-icons/FormatListNumbered';
 import BarcodeIcon from 'material-ui-icons/ViewHeadline';
@@ -25,8 +27,13 @@ import BookIcon from 'material-ui-icons/Book';
 import InfoIcon from 'material-ui-icons/Info';
 import BackIcon from 'material-ui-icons/NavigateBefore';
 
-import { fetch } from '../../crud/actions';
+import { setTileId } from './actions';
+import { tileId } from './selectors';
+
+import { fetch, clear } from '../../crud/actions';
 import { data, loading } from '../../crud/selectors';
+
+import { authenticated } from '../User/selectors';
 
 import DecorationPreviewModel from '../../models/decorationPreview';
 import ScanModel from '../../models/scan';
@@ -48,15 +55,23 @@ class Decoration extends React.Component {
     fetch: propTypes.func.isRequired,
     data: propTypes.object.isRequired,
     loading: propTypes.bool.isRequired,
+    authenticated: propTypes.object.isRequired,
+    redirect: propTypes.func.isRequired,
+    clear: propTypes.func.isRequired,
+    setTileId: propTypes.func.isRequired,
+    tileId: propTypes.number.isRequired,
   };
 
   constructor() {
     super();
 
     this.handleBack = this.handleBack.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleSubcategoryRedirect = this.handleSubcategoryRedirect.bind(this);
   }
 
   componentWillMount() {
+    this.props.clear();
     const id = Number(this.props.match.params.id);
     this.props.fetch(DecorationPreviewModel, { decorationsId: id });
     this.props.fetch(DecorationModel, { id });
@@ -65,8 +80,39 @@ class Decoration extends React.Component {
     this.props.fetch(PlacementModel, { decorationsId: id });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.tileId !== nextProps.tileId) {
+      const id = nextProps.tileId;
+      this.props.fetch(DecorationPreviewModel, { decorationsId: id });
+      this.props.fetch(DecorationModel, { id });
+      this.props.fetch(ScanModel, { decorationsId: id });
+      this.props.fetch(PainterModel, { decorationsId: id });
+      this.props.fetch(PlacementModel, { decorationsId: id });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.setTileId(-1);
+    this.props.clear();
+  }
+
   handleBack() {
     this.props.history.goBack();
+  }
+
+  handleAdd() {
+    const booksId = this.props.data.get('decorations').first().toJS().booksId;
+    const decorationsId = this.props.data.get('decorations').first().toJS().id;
+    if (decorationsId !== null) {
+      this.props.redirect(`/decoration/add/${booksId}/${decorationsId}`);
+    } else {
+      this.props.redirect(`/decoration/add/${booksId}`);
+    }
+  }
+
+  handleSubcategoryRedirect(id) {
+    this.props.clear();
+    this.props.setTileId(id);
   }
 
   render() {
@@ -75,6 +121,15 @@ class Decoration extends React.Component {
       <div className={classes.root}>
         {(!props.loading) ? (
           <div>
+            {props.authenticated.id && props.data.has('decorations') &&
+              <div>
+                <Button fab color="accent" aria-label="edit" className={classes.editButton}>
+                  <ModeEditIcon />
+                </Button>
+                <Button fab color="primary" aria-label="edit" className={classes.addButton} onClick={this.handleAdd}>
+                  <AddIcon />
+                </Button>
+              </div>}
             <Typography type="display1" gutterBottom>
               <IconButton aria-label="Back" onClick={this.handleBack}>
                 <BackIcon />
@@ -145,7 +200,7 @@ class Decoration extends React.Component {
                 {props.data.has('decorationWithScan') && !props.data.loading &&
                   <GridList cellHeight={280} className={classes.gridList} cols={4} spacing={24}>
                     {props.data.get('decorationWithScan').toJS().map(tile => (
-                      <GridListTile key={tile.id} className={classes.gridListTile} onClick={() => props.redirect(`/decoration/${tile.id}`)}>
+                      <GridListTile key={tile.id} className={classes.gridListTile} onClick={() => this.handleSubcategoryRedirect(tile.id)}>
                         <img src={tile.photo} alt={tile.name} />
                         <GridListTileBar
                           title={tile.name}
@@ -183,13 +238,17 @@ class Decoration extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   data,
-  loading
+  loading,
+  authenticated,
+  tileId,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     redirect: (location = '/') => dispatch(push(location)),
     fetch: (model, params) => dispatch(fetch(model, params)),
+    clear: () => dispatch(clear()),
+    setTileId: id => dispatch(setTileId(id)),
   };
 }
 

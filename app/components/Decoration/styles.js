@@ -38,4 +38,16 @@ export default theme => ({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+  editButton: {
+    position: 'absolute',
+    bottom: 25,
+    right: 25,
+    zIndex: 1,
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: 25,
+    zIndex: 1,
+  },
 });

@@ -10,5 +10,8 @@ export default theme => ({
     position: 'absolute',
     top: 135,
     left: 70,
+  },
+  gridListTile: {
+    cursor: 'pointer',
   }
 });

@@ -24,6 +24,8 @@ import PlacementsStep from './steps/Placements';
 import ScansStep from './steps/Scans';
 
 
+import { clear } from '../../../crud/actions';
+
 class DecorationAdd extends React.Component {
   static propTypes = {
     classes: propTypes.object.isRequired,
@@ -36,10 +38,11 @@ class DecorationAdd extends React.Component {
     setStep: propTypes.func.isRequired,
     step: propTypes.number.isRequired,
     decoration: propTypes.object.isRequired,
+    clear: propTypes.func.isRequired,
   }
 
   componentWillMount() {
-    console.log(this.props);
+    this.props.clear();
   }
 
   render() {
@@ -93,6 +96,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   redirect: (location = '/') => dispatch(push(location)),
   setStep: nextStep => dispatch(setStep(nextStep)),
+  clear: () => dispatch(clear()),
 });
 
 export default compose(
